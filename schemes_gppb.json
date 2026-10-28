@@ -1,0 +1,697 @@
+{
+  "title": "Geologi Pertambangan Panas Bumi (GPPB)",
+  "schemes": [
+    {
+      "name": "SURVEY TECNICIAN (JURU UKUR) / AHLI PEMETAAN TAMBANG TERBUKA",
+      "lsp": null,
+      "units": [
+        {
+          "code": "MBP.MB01.011.01",
+          "name": "Melaksanakan Komunikasi Timbal Balik"
+        },
+        {
+          "code": "MBP.MB01.012.01",
+          "name": "Melaksanakan Prinsip-Prinsip Sistem Keselamatan Kerja (K3) di Tempat Kerja"
+        },
+        {
+          "code": "MBP.MB01.013.01",
+          "name": "Menyusun dan Menerapkan Rencana Kerja"
+        },
+        {
+          "code": "MBP.MB01.014.01",
+          "name": "Menyusun Laporan"
+        },
+        {
+          "code": "MBP.MB02.011.01",
+          "name": "Mengukur poligon"
+        },
+        {
+          "code": "MBP.MB02.012.01",
+          "name": "Mengukur situasi dan menentukan koordinat dan tinggi dari permukaan laut"
+        },
+        {
+          "code": "MBP.MB02.013.01",
+          "name": "Membuat peta manuskrip dan kompilasi peta topografi"
+        },
+        {
+          "code": "MBP.MB02.014.01",
+          "name": "Mengukur penampang dan menggambar peta penampang (profile)"
+        },
+        {
+          "code": "MBP.MB02.015.01",
+          "name": "Melaksanakan pematokan (stake out) dan menghitung luas wilayah kegiatan pertambangan"
+        },
+        {
+          "code": "MBP.MB02.016.01",
+          "name": "Menghitung volume material"
+        },
+        {
+          "code": "MBP.MB04.003.01",
+          "name": "Melaksanakan Kepekaan Terhadap Lingkungan Sosial dan Budaya"
+        }
+      ]
+    },
+    {
+      "name": "Pengawas Operasional Pertama (POP) Panas Bumi",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062020.001.01",
+          "name": "Melaksanakan tugas dan tanggung jawab Keselamatan dan Kesehatan Kerja Panas Bumi pada area yang menjadi tanggung jawabnya"
+        },
+        {
+          "code": "B.062020.002.01",
+          "name": "Melaksanakan Dasar-dasar Keselamatan dan Kesehatan Kerja (K3) Panas Bumi"
+        },
+        {
+          "code": "B.062020.003.01",
+          "name": "Menginvestigasi Kecelakaan Panas Bumi"
+        },
+        {
+          "code": "B.062020.004.01",
+          "name": "Mengidentifikasi Bahaya dan Resiko"
+        },
+        {
+          "code": "B.062020.005.01",
+          "name": "Memahami dasar-dasar perlindungan  lingkungan panas bumi"
+        },
+        {
+          "code": "B.062020.006.01",
+          "name": "Melaksanakan Pengelolaan dan Pemantauan Lingkungan Panas Bumi"
+        },
+        {
+          "code": "B.062020.007.01",
+          "name": "Menggunakan komunikasi timbal balik"
+        },
+        {
+          "code": "B.062020.008.01",
+          "name": "Menyusun dan menerapkan rencana kerja"
+        },
+        {
+          "code": "B.062020.009.01",
+          "name": "Melaksanakan Sistem Manajemen Keselamatan dan Kesehatan Kerja (SMK3) di tempat kerja"
+        }
+      ]
+    },
+    {
+      "name": "Pengawas Operasional Madya (POM) Panas Bumi",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062020.010.01",
+          "name": "Mengevaluasi tugas dan tanggung jawab K3LL Panas Bumi pada area yang menjadi tanggung jawabnya"
+        },
+        {
+          "code": "B.062020.011.01",
+          "name": "Mengawasi Penerapan Peraturan Perundang-undangan K3LL Panas Bumi"
+        },
+        {
+          "code": "B.062020.012.01",
+          "name": "Mengevaluasi Penerapan Sistem Manajemen K3 dan Lindungan Lingkungan Panas Bumi"
+        },
+        {
+          "code": "B.062020.013.01",
+          "name": "Mengkomunikasikan kegiatan K3LL"
+        },
+        {
+          "code": "B.062020.014.01",
+          "name": "Melaksanakan Program Penanggulangan Keadaan Darurat"
+        }
+      ]
+    },
+    {
+      "name": "Pengawas Operasional Utama (POU) Panas Bumi",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062020.015.01",
+          "name": "MerencanakanTugasdanTanggungJawab K3LL Panas Bumi pada Area yang menjadi tanggung jawabnya"
+        },
+        {
+          "code": "B.062020.016.01",
+          "name": "Menyusun Program Manajemen K3 dan Lindungan Lingkungan (K3LL) Panas Bumi"
+        },
+        {
+          "code": "B.062020.017.01",
+          "name": "Memahami Operasi Pengusahaan Panas Bumi"
+        },
+        {
+          "code": "B.062020.018.01",
+          "name": "Menyusun Perencanaan Komunikasi Program K3LL"
+        },
+        {
+          "code": "B.062020.019.01",
+          "name": "Merencanakan dan Mengevaluasi Pengelolaan Keadaan Darurat."
+        }
+      ]
+    },
+    {
+      "name": "Pengawas Operasional Pertama (POP) Pertambangan Minerba",
+      "lsp": null,
+      "units": [
+        {
+          "code": "PMB.PO02.001.01",
+          "name": "Melaksanakan Peraturan Perundang-undangan terkait Keselamatan Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.002.01",
+          "name": "Melaksanakan Tugas dan Tanggung Jawab Keselamatan Pertambangan pada Area yang menjadi Tanggung Jawabnya"
+        },
+        {
+          "code": "PMB.PO02.003.01",
+          "name": "Melaksanakan Pertemuan Keselamatan Pertambangan Terencana"
+        },
+        {
+          "code": "PMB.PO02.004.01",
+          "name": "Melaksanakan Investigasi Kecelakaan"
+        },
+        {
+          "code": "PMB.PO02.005.01",
+          "name": "Melaksanakan Identifikasi Bahaya dan Pengendalian Risiko"
+        },
+        {
+          "code": "PMB.PO02.006.01",
+          "name": "Melaksanakan Peraturan Perundang-undangan terkait Perlindungan Lingkungan"
+        },
+        {
+          "code": "PMB.PO02.007.01",
+          "name": "Melaksanakan Inspeksi"
+        },
+        {
+          "code": "PMB.PO02.008.01",
+          "name": "Melaksanakan Analisis Keselamatan Pekerjaan"
+        }
+      ]
+    },
+    {
+      "name": "Pengawas Operasional Madya (POM) Pertambangan Minerba",
+      "lsp": null,
+      "units": [
+        {
+          "code": "PMB.PO02.009.01",
+          "name": "Melaksanakan Tugas dan Tanggung Jawab sebagai Pengawas Operasional Madya (POM)"
+        },
+        {
+          "code": "PMB.PO02.010.01",
+          "name": "Mengelola Keselamatan Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.012.01",
+          "name": "Mengelola Keadaan Darurat Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.014.01",
+          "name": "Mengelola Penerapan KAidah Teknis Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.015.01",
+          "name": "Mengawasi Kegiatan Usaha Jasa Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.011.01",
+          "name": "Mengelola Lingkungan Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.013.01",
+          "name": "Melaksanakan Upaya Penerapan Konservasi Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.016.01",
+          "name": "Mengawasi Standardisasi Pertambangan Mineral dan Batubara"
+        }
+      ]
+    },
+    {
+      "name": "Pengawas Operasional Utama (POU) Pertambangan Minerba",
+      "lsp": null,
+      "units": [
+        {
+          "code": "PMB.PO02.017.01",
+          "name": "Melaksanakan Tugas dan Tanggung Jawab sebagai Pengawas Operasional Utama (POU)"
+        },
+        {
+          "code": "PMB.PO02.018.01",
+          "name": "Melakukan Pengelolaan Keselamatan Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.019.01",
+          "name": "Mengelola Perlindungan Lingkungan Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.020.01",
+          "name": "Mengelola Konservasi Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.021.01",
+          "name": "Mengevaluasi Penerapan Kaidah Teknis Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.022.01",
+          "name": "Mengelola Kegiatan Usaha Jasa Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.023.01",
+          "name": "Mengelola Standardisasi Pertambangan Mineral dan Batubara"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geologi-Muda/Junior Geologist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062021.001.01",
+          "name": "Menganalisis Prinsip Dasar Keselamatan, Kesehatan Kerja dan Lindungan Lingkungan (K3LL) di tempat Kerja"
+        },
+        {
+          "code": "B.062021.002.01",
+          "name": "Mematuhi Prinsip Dasar Keselamatan, Kesehatan Kerja dan Lindungan Lingkungan (K3LL) di Tempat Kerja"
+        },
+        {
+          "code": "B.062021.005.01",
+          "name": "Melakukan Komunikasi Efektif di Tempat Kerja"
+        },
+        {
+          "code": "B.062021.006.01",
+          "name": "Membuat Laporan dan Rencana Kerja Kegiatan di Tempat Kerja"
+        },
+        {
+          "code": "B.062021.007.01",
+          "name": "Melakukan Survei Tinjau (Reconnaissance) Geologi Daerah Panas Bumi"
+        },
+        {
+          "code": "B.062021.009.01",
+          "name": "Mengelola Database Geologi Panas Bumi"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geologi-Madya/Senior Geologist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062021.003.01",
+          "name": "Mengukur Tingkat Kepatuhan Prinsip Dasar Keselamatan, Kesehatan Kerja dan Lindungan Lingkungan (K3LL) di Tempat Kerja"
+        },
+        {
+          "code": "B.062021.008.01",
+          "name": "Melakukan Pemetaan Geologi Rinci Daerah Panas Bumi"
+        },
+        {
+          "code": "B.062021.010.01",
+          "name": "Membuat Model Geologi Panas Bumi"
+        },
+        {
+          "code": "B.062021.014.01",
+          "name": "Melakukan Pekerjaan Wellsite Geology"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geologi-Utama/Advisor (Consultant) Geologist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062021.004.01",
+          "name": "Mengevaluasi Prinsip Dasar Keselamatan, Kesehatan Kerja dan Lindungan Lingkungan (K3LL) di Tempat Kerja"
+        },
+        {
+          "code": "B.062021.011.01",
+          "name": "Membuat Model Tentatif atau Konseptual Sistem Panas Bumi"
+        },
+        {
+          "code": "B.062021.012.01",
+          "name": "Memilih Model Tentatif dan Konseptual Sistem Panas Bumi"
+        },
+        {
+          "code": "B.062021.013.01",
+          "name": "Merekomendasi Perkiraan Potensi Panas Bumi"
+        },
+        {
+          "code": "B.062021.015.01",
+          "name": "Merekomendasikan Perencanaan Pengeboran Sumur Eksplorasi Panas Bumi"
+        },
+        {
+          "code": "B.062021.016.01",
+          "name": "Memperkirakan Keberlanjutan Operasional Sumur Pengeboran"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geokimia-Muda/Junior Geochemist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062022.001.01",
+          "name": "Mengenali Prinsip Dasar Kesehatan, Keselamatan Kerja dan Lindungan Lingkungan (K3LL) di Tempat Kerja"
+        },
+        {
+          "code": "B.062022.002.01",
+          "name": "Mematuhi Prinsip Dasar Kesehatan, Keselamatan Kerja dan Lindungan Lingkungan (K3LL) di Tempat Kerja"
+        },
+        {
+          "code": "B.062022.005.01",
+          "name": "Menerima dan Memahami Komunikasi di Tempat Kerja"
+        },
+        {
+          "code": "B.062022.009.01",
+          "name": "Mengambil Sampel dari Manifestasi"
+        },
+        {
+          "code": "B.062022.011.01",
+          "name": "Mengambil Sampel Geokimia Sumur"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geokimia-Madya/Senior Geochemist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062022.003.01",
+          "name": "Mengukur Tingkat Kepatuhan Prinsip Dasar Kesehatan, Keselamatan Kerja dan Lindungan Lingkungan (K3LL) di Tempat Kerja"
+        },
+        {
+          "code": "B.062022.006.01",
+          "name": "Menerima dan Memahami Informasi yang Berkaitan dari Beberapa Sumber"
+        },
+        {
+          "code": "B.062022.007.01",
+          "name": "Mencari dan Memilih Informasi dari Beberapa Sumber"
+        },
+        {
+          "code": "B.062022.010.01",
+          "name": "Mengolah Data Sampel"
+        },
+        {
+          "code": "B.062022.012.01",
+          "name": "Menginterpretasi Data Sampel dari Manifestasi"
+        },
+        {
+          "code": "B.062022.013.01",
+          "name": "Menginterpretasi Data Sampel Geokimia Sumur pada Kondisi Awal"
+        },
+        {
+          "code": "B.062022.014.01",
+          "name": "Memonitor Geokimia Sumur"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geokimia-Utama/Advisor (Consultant) Geochemist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062022.004.01",
+          "name": "Mengevaluasi Prinsip Dasar Kesehatan, Keselamatan Kerja dan Lindungan Lingkungan (K3LL) di Tempat Kerja"
+        },
+        {
+          "code": "B.062022.008.01",
+          "name": "Menghubungkan dan Meramu Informasi dari Berbagai Sumber Lisan Maupun Tulisan"
+        },
+        {
+          "code": "B.062022.015.01",
+          "name": "Mengevaluasi Model Awal Geokimia Panas Bumi"
+        },
+        {
+          "code": "B.062022.016.01",
+          "name": "Merencanakan Sumur Panas Bumi Berdasarkan Model Geokimia Panas Bumi"
+        },
+        {
+          "code": "B.062022.017.01",
+          "name": "Memutakhirkan Model Geokimia Panas Bumi Berdasarkan Data Sumur Terbaru"
+        },
+        {
+          "code": "B.062022.018.01",
+          "name": "Membuat Strategi Keberlanjutan (Sustainability) Lapangan Panas Bumi"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geofisika-Muda/Junior Geophysicist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062023.001.01",
+          "name": "Menentukan Posisi di Peta dan Lapangan"
+        },
+        {
+          "code": "B.062023.002.01",
+          "name": "Melaksanakan Survei Metode Geolistrik"
+        },
+        {
+          "code": "B.062023.003.01",
+          "name": "Melaksanakan Survei Metode Gaya Berat"
+        },
+        {
+          "code": "B.062023.004.01",
+          "name": "Melaksanakan Survei Metode Geomagnet"
+        },
+        {
+          "code": "B.062021.001.01",
+          "name": "Menganalisis Prinsip Dasar Keselamatan, Kesehatan Kerja dan Lindungan Lingkungan (K3LL) di tempat Kerja"
+        },
+        {
+          "code": "B.062021.002.01",
+          "name": "Mematuhi Prinsip Dasar Keselamatan, Kesehatan Kerja dan Lindungan Lingkungan (K3LL) di Tempat Kerja"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geofisika-Madya/Senior Geophysicist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062023.005.01",
+          "name": "Melaksanakan Survei Metode Elektromagnetik"
+        },
+        {
+          "code": "B.062023.006.01",
+          "name": "Melaksanakan Survei Metode Gempa Mikro  (MEQ)/Passive Seismic"
+        },
+        {
+          "code": "B.062023.007.01",
+          "name": "Membuat Model Geofisika Sistem Panas Bumi"
+        },
+        {
+          "code": "B.062023.008.01",
+          "name": "Menginterpretasi Model Geofisika Sistem Panas  Bumi"
+        },
+        {
+          "code": "B.062023.009.01",
+          "name": "Merencanakan Strategi dan Teknologi Survei  Geofisika"
+        },
+        {
+          "code": "B.062023.010.01",
+          "name": "Melakukan Pengawasan Pengukuran Petrofisika"
+        },
+        {
+          "code": "B.062023.011.01",
+          "name": "Membuat Model Geofisika Terpadu"
+        },
+        {
+          "code": "B.062023.012.01",
+          "name": "Menghitung Potensi Panas Bumi"
+        }
+      ]
+    },
+    {
+      "name": "Ahli Geofisika-Utama/Advisor (Consultant) Geophysicist",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.062023.013.01",
+          "name": "Merekomendasikan Perencanaan Sumur Panas  Bumi"
+        },
+        {
+          "code": "B.062023.014.01",
+          "name": "Memutuskan Strategi Eksplorasi dan Penilaian Potensi Panas Bumi dari Data Sumur Eksplorasi"
+        },
+        {
+          "code": "B.062023.015.01",
+          "name": "Merencanakan Pengembangan dan Produksi  Lapangan Panas Bumi"
+        }
+      ]
+    },
+    {
+      "name": "Operator Uji Alir Fluida Sumur Panas Bumi Tingkat I/Geothermal Well Fluid Flow Test Operator Level I",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.O6OUA02.001.1",
+          "name": "Mengoperasikan peralatan uji alir fluida sumur panas bumi dasar"
+        }
+      ]
+    },
+    {
+      "name": "Operator Uji Alir Fluida Sumur Panas Bumi Tingkat II/Geothermal Well Fluid Flow Test Operator Level II",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.06OUA02.002.1",
+          "name": "Mengoperasikan peralatan uji alir fluida sumur panas bumi lanjutan"
+        }
+      ]
+    },
+    {
+      "name": "Pengawas Uji Alir Fluida Sumur Panas Bumi Tingkat I",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.06PUA02.003.1",
+          "name": "Melaksanakan uji alir fluida sumur panas bumi"
+        }
+      ]
+    },
+    {
+      "name": "PENGAWAS UJI ALIR FLUIDA SUMUR PANAS BUMI TINGKAT II",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.06PUA02.004.1",
+          "name": "Melaksanakan kegiatan uji alir fluida sumur panas bumi"
+        }
+      ]
+    },
+    {
+      "name": "Operator Steam Field Facilities Panas Bumi Tingkat I",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.060SF02.001.1",
+          "name": "Mengoperasikan Sumur Produksi Panas Bumi Tingkat I"
+        },
+        {
+          "code": "B.060SF02.004.1",
+          "name": "Mengoperasikan Sumur Inieksi Brine dan Kondensat Tingkat I"
+        },
+        {
+          "code": "B.060SF02.007.1",
+          "name": "Mengoperasikan Sistem Separator dan Scrubber Lapangan Panas Bumi Tingkat I"
+        },
+        {
+          "code": "B.060SF02.010.1",
+          "name": "Mengoperasikan Service Water System Tingkat I"
+        }
+      ]
+    },
+    {
+      "name": "Operator Steam Field Facilities Panas Bumi Tingkat II",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.060SF02.002.1",
+          "name": "Mengoperasikan Sumur Produksi Panas Bumi Tingkat II"
+        },
+        {
+          "code": "B.060SF02.005.1",
+          "name": "Mengoperasikan Sumur Injeksi Brine dan Kondensat Tingkat II"
+        },
+        {
+          "code": "B.060SF02.008.1",
+          "name": "Mengoperasikan Sistem Separator dan Scrubber Lapangan Panas Bumi Tingkat II"
+        },
+        {
+          "code": "B.060SF02.011.1",
+          "name": "Mengoperasikan Service Water System Tingkat II"
+        }
+      ]
+    },
+    {
+      "name": "Operator Steam Field Facilities Panas Bumi Tingkat III",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.060SF02.003.1",
+          "name": "Mengoperasikan Sumur Produksi Panas Bumi Tingkat III"
+        },
+        {
+          "code": "B.060SF02.006.1",
+          "name": "Mengoperasikan Sumur Injeksi Brine dan Kondensat Tingkat III"
+        },
+        {
+          "code": "B.060SF02.009.1",
+          "name": "Mengoperasikan Sistem Separator dan Scrubber Lapangan Panas Bumi Tingkat III"
+        },
+        {
+          "code": "B.060SF02.012.1",
+          "name": "Mengoperasikan Service Water System Tingkat III"
+        }
+      ]
+    },
+    {
+      "name": "Operator Uji Alir Fluida Sumur Panas Bumi Tingkat II/Geothermal Well Fluid Flow Test Operator Level II",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.06OUA02.002.1",
+          "name": "Mengoperasikan peralatan uji alir fluida sumur panas bumi lanjutan"
+        }
+      ]
+    },
+    {
+      "name": "Mengukur dan Menghitung Luas Wilayah Tambang Terbuka",
+      "lsp": null,
+      "units": [
+        {
+          "code": "MBP.MB01.011.01",
+          "name": "Melaksanakan Komunikasi Timbal Balik"
+        },
+        {
+          "code": "MBP.MB01.012.01",
+          "name": "Melaksanakan Prinsip-prinsip Sistem Keselamatan dan Kesehatan Kerja (K3) di Tempat Kerja"
+        },
+        {
+          "code": "MBP.MB01.013.01",
+          "name": "Menyusun dan Menerapkan Rencana Kerja"
+        },
+        {
+          "code": "MBP.MB01.014.01",
+          "name": "Menyusun Laporan"
+        },
+        {
+          "code": "MBP.MB02.011.01",
+          "name": "Mengukur poligon"
+        },
+        {
+          "code": "MBP.MB02.012.01",
+          "name": "Mengukur situasi dan menentukan koordinat dan tinggi dari permukaan laut"
+        },
+        {
+          "code": "MBP.MB02.015.01",
+          "name": "Melaksanakan pematokan (stake out) dan menghitung luas wilayah kegiatan pertambangan"
+        }
+      ]
+    },
+    {
+      "name": "Menggambar Peta dan Menghitung Volume Material Tambang Terbuka",
+      "lsp": null,
+      "units": [
+        {
+          "code": "MBP.MB01.011.01",
+          "name": "Melaksanakan Komunikasi Timbal Balik"
+        },
+        {
+          "code": "MBP.MB01.013.01",
+          "name": "Menyusun dan Menerapkan Rencana Kerja"
+        },
+        {
+          "code": "MBP.MB01.014.01",
+          "name": "Menyusun Laporan"
+        },
+        {
+          "code": "MBP.MB02.013.01",
+          "name": "Membuat peta manuskrip dan kompilasi peta topografi"
+        },
+        {
+          "code": "MBP.MB02.014.01",
+          "name": "Mengukur penampang dan menggambar peta penampang (profile)"
+        },
+        {
+          "code": "MBP.MB02.016.01",
+          "name": "Menghitung volume material"
+        }
+      ]
+    }
+  ]
+}

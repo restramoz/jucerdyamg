@@ -1,0 +1,601 @@
+{
+  "title": "Pertambangan Mineral Batubara dan Energi",
+  "schemes": [
+    {
+      "name": "PENGELOLA KESELAMATAN PRATAMA",
+      "lsp": null,
+      "units": [
+        {
+          "code": "M.71KKK01.004.1",
+          "name": "Mengawasi Pelaksanaan Izin Kerja"
+        },
+        {
+          "code": "M.71KKK01.006.1",
+          "name": "Mengelola Pertolongan Pertama pada Kecelakaan Kerja (P3K) di Tempat Kerja"
+        },
+        {
+          "code": "M.71KKK01.008.1",
+          "name": "Mengelola Alat Pelindung Diri (APD) di Tempat Kerja"
+        },
+        {
+          "code": "M.71KKK01.010.1",
+          "name": "Mengelola Sistem Dokumentasi K3"
+        },
+        {
+          "code": "B.05KPM00.001.2",
+          "name": "Mengelola Risiko Keselamatan Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.006.1",
+          "name": "Mengelola Administrasi Keselamatan Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.008.1",
+          "name": "Mengelola Lingkungan Kerja Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.010.2",
+          "name": "Mengelola Komunikasi Keselamatan Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.015.2",
+          "name": "Mengelola Inspeksi Keselamatan Pertambangan"
+        }
+      ]
+    },
+    {
+      "name": "PENGELOLA KESELAMATAN MUDA",
+      "lsp": null,
+      "units": [
+        {
+          "code": "MBP.MB01.013.01",
+          "name": "Menyusun dan Menerapkan Rencana Kerja"
+        },
+        {
+          "code": "M.71KKK01.005.1",
+          "name": "Melakukan Pengukuran Faktor Bahaya di Tempat Kerja"
+        },
+        {
+          "code": "M.71KKK01.007.1",
+          "name": "Mengelola Tindakan Tanggap Darurat"
+        },
+        {
+          "code": "B.05KPM00.002.1",
+          "name": "Mengelola Peraturan Perundang-undangan Keselamatan Pertambangan dan Persyaratan Terkait Lainnya"
+        },
+        {
+          "code": "B.05KPM00.004.2",
+          "name": "Mengelola Keadaan Darurat Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.009.1",
+          "name": "Mengelola Keselamatan Operasi Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.017.2",
+          "name": "Mengelola Penyelidikan Insiden Pertambangan"
+        }
+      ]
+    },
+    {
+      "name": "PENGELOLA KESELAMATAN MADYA",
+      "lsp": null,
+      "units": [
+        {
+          "code": "M.71KKK01.002.1",
+          "name": "Merancang Sistem Tanggap Darurat"
+        },
+        {
+          "code": "M.71KKK01.009.1",
+          "name": "Menerapkan Program Pelayanan Kesehatan Kerja"
+        },
+        {
+          "code": "M.71KKK01.011.1",
+          "name": "Menerapkan Manajemen Risiko K3"
+        },
+        {
+          "code": "M.71KKK01.012.1",
+          "name": "Mengevaluasi Pemenuhan Persyaratan dan Prosedur K3"
+        },
+        {
+          "code": "B.05KPM00.003.2",
+          "name": "Menyusun Rencana Anggaran Biaya Keselamatan Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.005.1",
+          "name": "Mengelola Keselamatan Kerja Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.007.2",
+          "name": "Mengelola Kesehatan Kerja Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.014.2",
+          "name": "Mengelola Standar Keselamatan Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.016.2",
+          "name": "Mengelola Audit Keselamatan Pertambangan"
+        }
+      ]
+    },
+    {
+      "name": "PENGELOLA KESELAMATAN UTAMA",
+      "lsp": null,
+      "units": [
+        {
+          "code": "M.71KKK01.001.1",
+          "name": "Merancang Strategi Pengendalian Risiko K3 di Tempat Kerja"
+        },
+        {
+          "code": "H.52LOG00.061.1",
+          "name": "Merencanakan Pembelian"
+        },
+        {
+          "code": "H.52LOG00.064.1",
+          "name": "Mengelola dan Mengevaluasi Permintaan Penawaran"
+        },
+        {
+          "code": "B.05KPM00.011.1",
+          "name": "Mengelola Organisasi Bagian Keselamatan Pertambangan"
+        },
+        {
+          "code": "B.05KPM00.012.2",
+          "name": "Mengelola Sistem Manajemen Keselamatan"
+        },
+        {
+          "code": "B.05KPM00.013.1",
+          "name": "Mengelola Program Keselamatan Pertambangan"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Okupasi Pengawas Operasional Pertama (POP)",
+      "lsp": null,
+      "units": [
+        {
+          "code": "PMB.PO02.001.01",
+          "name": "Melaksanakan Peraturan Perundang-undangan terkait Keselamatan Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.002.01",
+          "name": "Melaksanakan Tugas dan Tanggung Jawab Keselamatan Pertambangan pada Area yang menjadi Tanggung Jawabnya"
+        },
+        {
+          "code": "PMB.PO02.003.01",
+          "name": "Melaksanakan Pertemuan Keselamatan Pertambangan Terencana"
+        },
+        {
+          "code": "PMB.PO02.004.01",
+          "name": "Melaksanakan Investigasi Kecelakaan"
+        },
+        {
+          "code": "PMB.PO02.005.01",
+          "name": "Melaksanakan Identifikasi Bahaya dan Pengendalian Risiko"
+        },
+        {
+          "code": "PMB.PO02.006.01",
+          "name": "Melaksanakan Peraturan Perundang-undangan terkait Perlindungan Lingkungan"
+        },
+        {
+          "code": "PMB.PO02.007.01",
+          "name": "Melaksanakan Inspeksi"
+        },
+        {
+          "code": "PMB.PO02.008.01",
+          "name": "Melaksanakan Analisis Keselamatan Pekerjaan"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Okupasi Pengawas Operasional Madya (POM)",
+      "lsp": null,
+      "units": [
+        {
+          "code": "PMB.PO02.009.01",
+          "name": "Melaksanakan Tugas dan Tanggung Jawab sebagai Pengawas Operasional Madya (POM)"
+        },
+        {
+          "code": "PMB.PO02.010.01",
+          "name": "Mengelola Keselamatan Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.011.01",
+          "name": "Mengelola Lingkungan Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.012.01",
+          "name": "Mengelola Keadaan Darurat Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.013.01",
+          "name": "Melaksanakan Upaya Penerapan Konservasi  Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.014.01",
+          "name": "Mengelola Penerapan KAidah Teknis Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.015.01",
+          "name": "Mengawasi Kegiatan Usaha Jasa Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.016.01",
+          "name": "Mengawasi Standardisasi Pertambangan Mineral dan Batubara"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Okupasi Pengawas Operasional Utama (POU)",
+      "lsp": null,
+      "units": [
+        {
+          "code": "PMB.PO02.017.01",
+          "name": "Melaksanakan Tugas dan Tanggung Jawab sebagai Pengawas Operasional Utama (POU)"
+        },
+        {
+          "code": "PMB.PO02.018.01",
+          "name": "Melakukan Pengelolaan Keselamatan Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.019.01",
+          "name": "Mengelola Perlindungan Lingkungan Pertambangan"
+        },
+        {
+          "code": "PMB.PO02.020.01",
+          "name": "Mengelola Konservasi Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.021.01",
+          "name": "Mengevaluasi Penerapan Kaidah Teknis Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.022.01",
+          "name": "Mengelola Kegiatan Usaha Jasa Pertambangan Mineral dan Batubara"
+        },
+        {
+          "code": "PMB.PO02.023.01",
+          "name": "Mengelola Standardisasi Pertambangan Mineral dan Batubara"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Okupasi Survey Technician (Juru Ukur Tambang)",
+      "lsp": null,
+      "units": [
+        {
+          "code": "MBP.MB01.011.01",
+          "name": "Melaksanakan Komunikasi Timbal Balik"
+        },
+        {
+          "code": "MBP.MB01.012.01",
+          "name": "Melaksanakan Prinsip-prinsip Sistem Keselamatan dan Kesehatan Kerja (K3) di Tempat Kerja"
+        },
+        {
+          "code": "MBP.MB01.013.01",
+          "name": "Menyusun dan Menerapkan Rencana Kerja"
+        },
+        {
+          "code": "MBP.MB01.014.01",
+          "name": "Menyusun Laporan"
+        },
+        {
+          "code": "MBP.MB02.011.01",
+          "name": "Mengukur poligon"
+        },
+        {
+          "code": "MBP.MB02.012.01",
+          "name": "Mengukur situasi dan menentukan koordinat dan tinggi dari permukaan laut"
+        },
+        {
+          "code": "MBP.MB02.013.01",
+          "name": "Membuat peta manuskrip dan kompilasi peta topografi"
+        },
+        {
+          "code": "MBP.MB02.014.01",
+          "name": "Mengukur penampang dan menggambar peta penampang (profile)"
+        },
+        {
+          "code": "MBP.MB02.015.01",
+          "name": "Melaksanakan pematokan (stake out) dan menghitung luas wilayah kegiatan pertambangan"
+        },
+        {
+          "code": "MBP.MB02.016.01",
+          "name": "Menghitung volume material"
+        },
+        {
+          "code": "MBP.MB04.003.01",
+          "name": "Melaksanakan Kepekaan Terhadap Lingkungan Sosial dan Budaya"
+        }
+      ]
+    },
+    {
+      "name": "IDENTIFIKASI BAHAYA DAN PENGENDALIAN RISIKO (IBPR) PERTAMBANGAN",
+      "lsp": null,
+      "units": [
+        {
+          "code": "PMB.PO02.005.01",
+          "name": "Melaksanakan Identifikasi Bahaya dan Pengendalian Risiko"
+        },
+        {
+          "code": "MBP.MB01.010.01",
+          "name": "Menyusun dan Mempresentasikan Laporan"
+        },
+        {
+          "code": "MBP.MB02.017.01",
+          "name": "Mengendalikan Risiko Keselamatan dan Kesehatan Kerja"
+        },
+        {
+          "code": "M.71KKK01.005.1",
+          "name": "Melakukan Pengukuran Faktor Bahaya di Tempat Kerja"
+        },
+        {
+          "code": "M.71KKK01.011.1",
+          "name": "Menerapkan Manajemen Risiko K3"
+        }
+      ]
+    },
+    {
+      "name": "PENYUSUNAN JOB SAFETY ANALYSIS (JSA) PERTAMBANGAN",
+      "lsp": null,
+      "units": [
+        {
+          "code": "PMB.PO02.005.01",
+          "name": "Melaksanakan Identifikasi Bahaya dan Pengendalian Risiko"
+        },
+        {
+          "code": "PMB.PO02.008.01",
+          "name": "Melaksanakan Analisis Keselamatan Pekerjaan"
+        },
+        {
+          "code": "MBP.MB01.010.01",
+          "name": "Menyusun dan Mempresentasikan Laporan"
+        },
+        {
+          "code": "M.71KKK01.001.1",
+          "name": "Merancang Strategi Pengendalian Risiko K3 di Tempat Kerja"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Klaster Merencanakan Reklamasi pada Kegiatan Pertambangan Mineral dan Batubara",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.05LMB01.001.1",
+          "name": "Merencanakan Pembukaan Lahan"
+        },
+        {
+          "code": "B.05LMB01.002.1",
+          "name": "Merencanakan Program Reklamasi"
+        },
+        {
+          "code": "B.05LMB01.003.1",
+          "name": "Merencanakan Kriteria Keberhasilan Reklamasi"
+        },
+        {
+          "code": "B.05LMB01.004.1",
+          "name": "Membuat Perencanaan Biaya Reklamasi"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Klaster Melaksanakan Reklamasi pada Kegiatan Pertambangan MIneral dan Batubara",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.05LMB02.001.1",
+          "name": "Melaksanakan Persiapan Program Reklamasi"
+        },
+        {
+          "code": "B.05LMB02.002.1",
+          "name": "Melaksanakan Program Reklamasi"
+        },
+        {
+          "code": "B.05LMB02.003.1",
+          "name": "Melaksanakan Perawatan Areal Reklamasi"
+        },
+        {
+          "code": "B.05LMB02.004.1",
+          "name": "Membuat Realisasi Biaya Pelaksanaan Reklamasi"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Klaster Merencanakan Pascatambang pada Kegiatan Pertambangan Mineral dan Batubara",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.05LMB04.001.1",
+          "name": "Menyusun Profil Wilayah"
+        },
+        {
+          "code": "B.05LMB04.002.1",
+          "name": "Menyusun Kegiatan Pertambangan"
+        },
+        {
+          "code": "B.05LMB04.003.1",
+          "name": "Menyusun Rona Lingkungan Akhir Lahan  Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.004.1",
+          "name": "Merencanakan Program Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.005.1",
+          "name": "Merencanakan Kegiatan Pemantauan  Lingkungan Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.006.1",
+          "name": "Merencanakan Organisasi dan Jadwal  Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.007.1",
+          "name": "Merencanakan Kriteria Keberhasilan  Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.008.1",
+          "name": "Merencanakan Biaya Pascatambang"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Klaster Melaksanakan Pascatambang pada Kegiatan Pertambangan Mineral dan Batubara",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.05LMB04.009.1",
+          "name": "Melaksanakan Persiapan Program  Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.010.1",
+          "name": "Melaksanakan Program Pembongkaran  Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.011.1",
+          "name": "Melaksanakan Kestabilan dan Keamanan  Fisik"
+        },
+        {
+          "code": "B.05LMB04.012.1",
+          "name": "Melaksanakan Program Pengembangan  Sosial, Budaya, dan Ekonomi  Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.013.1",
+          "name": "Melaksanakan Program Pemeliharaan  Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.014.1",
+          "name": "Melaporkan Hasil Pelaksanaan  Pascatambang"
+        }
+      ]
+    },
+    {
+      "name": "Skema Sertifikasi Klaster Melaksanakan Pemantuan Hasil Pascatambang pada Kegiatan Pertambangan Mineral dan Batubara",
+      "lsp": null,
+      "units": [
+        {
+          "code": "B.05LMB04.015.1",
+          "name": "Melaksanakan Pemantauan Kestabilan  dan Keamanan Fisik Pascatambang"
+        },
+        {
+          "code": "B.05LMB04.016.1",
+          "name": "Melaksanakan Pemantauan Air  Permukaan dan Air Tanah Tambang"
+        },
+        {
+          "code": "B.05LMB04.017.1",
+          "name": "Melaksanakan Pemantauan Biologi  Akuatik dan Terestrial"
+        },
+        {
+          "code": "B.05LMB04.018.1",
+          "name": "Melaksanakan Pemantauan Ekonomi,  Sosial, dan Budaya"
+        },
+        {
+          "code": "B.05LMB04.019.1",
+          "name": "Melaporkan Hasil Pemantauan  Pascatambang"
+        }
+      ]
+    },
+    {
+      "name": "BEKERJA DI KETINGGIAN",
+      "lsp": null,
+      "units": [
+        {
+          "code": "M.71KKK03.002.2",
+          "name": "Membuat Analisis Keselamatan Kerja (Job  safety analysis) dalam Pekerjaan pada  Ketinggian"
+        },
+        {
+          "code": "M.71KKK03.004.2",
+          "name": "Merancang Tindakan Penyelamatan Korban  pada Jalur Angkur Tingkat Lanjut"
+        },
+        {
+          "code": "M.71KKK03.006.2",
+          "name": "Merancang Sistem Izin Kerja Aman dalam  pekerjaan pada ketinggian"
+        },
+        {
+          "code": "M.71KKK03.018.2",
+          "name": "Menentukan Perangkat Pelindung Jatuh yang  Sesuai dalam Pekerjaan pada Ketinggian"
+        },
+        {
+          "code": "M.71KKK03.008.2",
+          "name": "Merancang Sistem Kesiapsiagaan dan  Tanggap Darurat dalam Pekerjaan pada  Ketinggian"
+        },
+        {
+          "code": "M.71KKK03.009.2",
+          "name": "Menerapkan Teknik Bekerja Aman pada  Struktur Bangunan"
+        },
+        {
+          "code": "M.71KKK03.011.2",
+          "name": "Melakukan Pergerakan Horizontal dan  Vertikal pada Struktur Bangunan"
+        },
+        {
+          "code": "M.71KKK03.012.2",
+          "name": "Membuat Simpul pada Tali dan Jalur Angkur  Dasar"
+        },
+        {
+          "code": "M.71KKK03.021.2",
+          "name": "Mengelola Perangkat Pelindung Jatuh dalam Pekerjaan pada Ketinggian"
+        },
+        {
+          "code": "M.71KKK03.022.2",
+          "name": "Menyelamatkan Diri Sendiri dalam Keadaan  Darurat pada Bangunan"
+        },
+        {
+          "code": "M.71KKK03.023.2",
+          "name": "Menyelamatkan Korban pada Struktur  Bangunan"
+        }
+      ]
+    },
+    {
+      "name": "PELAKSANAAN INVESTIGASI KECELAKAAN TAMBANG",
+      "lsp": null,
+      "units": [
+        {
+          "code": "MBP.MB01.010.01",
+          "name": "Menyusun dan Mempresentasikan Laporan"
+        },
+        {
+          "code": "MBP.MB02.019.01",
+          "name": "Menginvestigasi Kecelakaan Tambang"
+        },
+        {
+          "code": "M.71KKK01.001.1",
+          "name": "Merancang Strategi Pengendalian Risiko K3 di Tempat Kerja"
+        },
+        {
+          "code": "M.71KKK01.003.1",
+          "name": "Melakukan Komunikasi K3"
+        },
+        {
+          "code": "M.71KKK01.012.1",
+          "name": "Mengevaluasi Pemenuhan Persyaratan dan Prosedur K3"
+        }
+      ]
+    },
+    {
+      "name": "PELAKSANAAN INSPEKSI K3 PERTAMBANGAN",
+      "lsp": null,
+      "units": [
+        {
+          "code": "MBP.MB01.018.01",
+          "name": "Menyusun dan Mempresentasikan Laporan Rutin"
+        },
+        {
+          "code": "MBP.MB01.010.01",
+          "name": "Menyusun dan Mempresentasikan Laporan"
+        },
+        {
+          "code": "M.71KKK01.003.1",
+          "name": "Melakukan Komunikasi K3"
+        },
+        {
+          "code": "M.71KKK01.005.1",
+          "name": "Melakukan Pengukuran Faktor Bahaya di Tempat Kerja"
+        },
+        {
+          "code": "M.71KKK01.008.1",
+          "name": "Mengelola Alat Pelindung Diri (APD) di Tempat Kerja"
+        }
+      ]
+    }
+  ]
+}
