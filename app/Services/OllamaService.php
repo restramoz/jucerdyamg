@@ -88,8 +88,8 @@ class OllamaService
         $count = count($existingTitles) + 1;
 
         return [
-            'topic' => "Strategi Pengembangan Kompetensi Pertambangan dan Energi di {$cityName} (Bagian {$count})",
-            'focus' => 'Pengembangan kompetensi pertambangan, mineral, batubara, dan energi berbasis skema kompetensi',
+            'topic' => "Strategi Pengembangan Kompetensi K3 Listrik di {$cityName} (Bagian {$count})",
+            'focus' => 'Pengembangan kompetensi K3 Listrik, kelistrikan, batubara, dan energi berbasis skema kompetensi',
         ];
     }
 
@@ -99,7 +99,7 @@ class OllamaService
     protected function serviceContextLine(?string $serviceName): string
     {
         if ($serviceName === null || $serviceName === '') {
-            return 'Tidak ada program spesifik; gunakan konteks pelatihan dan skema kompetensi pertambangan dan energi Zonyberg secara umum.';
+            return 'Tidak ada program spesifik; gunakan konteks pelatihan dan layanan K3 Listrik Zonyberg secara umum.';
         }
 
         return "Program spesifik: {$serviceName}. Konsentrasikan isi artikel pada lingkup skema kompetensi tersebut.";
@@ -156,20 +156,20 @@ class OllamaService
             $focus = $selected['focus'];
         } else {
             $topic = trim((string) $params['topic']);
-            $focus = $params['focus'] ?? ('Kompetensi pertambangan, mineral, batubara, dan energi serta unit terkait skema '.($serviceName ?: 'Zonyberg'));
+            $focus = $params['focus'] ?? ('Kompetensi K3 Listrik dan keselamatan kelistrikan serta layanan terkait '.($serviceName ?: 'Zonyberg'));
         }
 
         $locationContext = $districtName ? "Kecamatan {$districtName}, {$cityName}" : $cityName;
 
         $systemPrompt = <<<PROMPT
-Anda adalah konsultan dan instruktur kompetensi pertambangan dan energi Indonesia yang berspesialisasi pada pelatihan dan skema kompetensi pertambangan, mineral, batubara, dan energi.
-Tugas Anda adalah menulis artikel edukatif dan otoritatif dalam Bahasa Indonesia formal mengenai pelatihan pertambangan dan skema kompetensi pertambangan, mineral, batubara, dan energi Zonyberg. Struktur artikel harus mencakup: Pembuka (intro), Silabus, Materi, Isi Konten, dan Penutup (conclusion).
+Anda adalah konsultan dan instruktur kompetensi K3 Listrik (keselamatan dan kesehatan kerja kelistrikan) Indonesia yang berspesialisasi pada pelatihan dan layanan K3 Listrik.
+Tugas Anda adalah menulis artikel edukatif dan otoritatif dalam Bahasa Indonesia formal mengenai pelatihan K3 Listrik dan keselamatan kelistrikan Zonyberg. Struktur artikel harus mencakup: Pembuka (intro), Silabus, Materi, Isi Konten, dan Penutup (conclusion).
 PERTIMBANGAN PROGRAM: {$this->serviceContextLine($serviceName)}
 
 ATURAN KUALITATAS & GAYA PENULISAN:
-1. Nada bahasa: Profesional, lugas, mengalir alami, berbobot untuk pengambil keputusan dan praktisi pertambangan, mineral, batubara, dan energi.
+1. Nada bahasa: Profesional, lugas, mengalir alami, berbobot untuk pengambil keputusan dan praktisi K3 Listrik dan keselamatan kelistrikan.
 2. Dilarang menggunakan filler AI klise seperti "Di era modern saat ini", "Tak dapat dipungkiri", atau kalimat berulang.
-3. Rujuk regulasi pertambangan, mineral, batubara, dan energi hanya jika Anda yakin terhadap sumber resminya. Jangan mengarang nomor regulasi, pasal, jadwal tetap, biaya fiktif, alamat kantor palsu, atau klaim akreditasi/otorisasi.
+3. Rujuk regulasi K3 Listrik dan keselamatan kelistrikan hanya jika Anda yakin terhadap sumber resminya. Jangan mengarang nomor regulasi, pasal, jadwal tetap, biaya fiktif, alamat kantor palsu, atau klaim akreditasi/otorisasi.
 4. Jangan mengarang jadwal tetap, biaya fiktif, alamat kantor palsu, atau klaim akreditasi sepihak. Arahkan konsultasi resmi melalui WhatsApp.
 5. Gunakan tag HTML semantik: <h2>, <h3>, <p>, <ul>, <ol>, <li>, <strong>, <blockquote>, <table><thead><tr><th>...</th></tr></thead><tbody><tr><td>...</td></tr></tbody></table>.
 6. Panjang target: Sekitar {$wordCount} kata (antara 6.000 hingga 9.000 kata).
@@ -191,8 +191,8 @@ Format skema JSON yang wajib dipatuhi:
     {"q": "Pertanyaan 2...", "a": "Jawaban ringkas 2..."}
   ],
   "image_brief": {
-    "concept": "Konsep visual foto aktivitas pertambangan, mineral, batubara, energi, pelatihan, dan pengembangan kompetensi dalam Bahasa Indonesia",
-    "english_prompt": "Detailed descriptive photo prompt in English for Google Flow: realistic photography of Indonesian mining and energy training, professionals and instructors in an industrial or training environment, mineral and coal handling and competency development, natural daylight, no text overlays, 8k",
+    "concept": "Konsep visual foto aktivitas K3 Listrik, kelistrikan, batubara, energi, pelatihan, dan pengembangan kompetensi dalam Bahasa Indonesia",
+    "english_prompt": "Detailed descriptive photo prompt in English for Google Flow: realistic photography of Indonesian electrical safety training, professionals and instructors in an industrial or training environment, kelistrikan and coal handling and competency development, natural daylight, no text overlays, 8k",
     "aspect_ratio": "16:9",
     "recommended_alt": "Alt text ramah SEO dalam Bahasa Indonesia"
   }
@@ -202,7 +202,7 @@ PROMPT;
         $serviceLine = $serviceName !== null ? "- Program Spesifik: {$serviceName}\n" : '';
 
         $userPrompt = <<<PROMPT
-Silakan buat artikel pelatihan pertambangan dan skema kompetensi lengkap dengan rincian berikut:
+Silakan buat artikel pelatihan K3 Listrik dan skema kompetensi lengkap dengan rincian berikut:
 - Topik Artikel: {$topic}
 - Fokus Materi: {$focus}
 - Lokasi Target: {$locationContext}
@@ -378,8 +378,8 @@ PROMPT;
                 $imageBrief = [];
             }
 
-            $concept = $imageBrief['concept'] ?? "Penerapan kompetensi pertambangan dan energi di {$cityName}";
-            $englishPrompt = $imageBrief['english_prompt'] ?? 'Professional documentary photograph of a mining and energy training environment in Indonesia, professionals and instructors at an industrial site, realistic natural lighting, no text';
+            $concept = $imageBrief['concept'] ?? "Penerapan kompetensi K3 Listrik dan energi di {$cityName}";
+            $englishPrompt = $imageBrief['english_prompt'] ?? 'Professional documentary photograph of a electrical safety training environment in Indonesia, professionals and instructors at an industrial site, realistic natural lighting, no text';
             $aspectRatio = $imageBrief['aspect_ratio'] ?? '16:9';
             $recommendedAlt = $imageBrief['recommended_alt'] ?? "Pelatihan {$brandLine} di {$cityName}";
 
@@ -426,11 +426,11 @@ PROMPT;
             'excerpt' => Str::limit(strip_tags($fallbackHtml), 180),
             'content' => $fallbackHtml,
             'seo_title' => Str::limit("{$fallbackTopic} | {$brandLine}", 60),
-            'meta_description' => Str::limit("Panduan {$fallbackTopic} untuk kompetensi pertambangan dan energi di {$cityName}.", 155),
+            'meta_description' => Str::limit("Panduan {$fallbackTopic} untuk kompetensi K3 Listrik dan energi di {$cityName}.", 155),
             'suggested_faqs' => [],
             'image_brief' => [
-                'concept' => "Kompetensi pertambangan dan energi di {$cityName}",
-                'english_prompt' => 'Professional photograph of a mining or energy facility inspection or briefing inside a modern industrial facility in Indonesia, realistic lighting, no text',
+                'concept' => "Kompetensi K3 Listrik di {$cityName}",
+                'english_prompt' => 'Professional photograph of a electrical safety facility inspection or briefing inside a modern industrial facility in Indonesia, realistic lighting, no text',
                 'aspect_ratio' => '16:9',
                 'recommended_alt' => "{$brandLine} - {$fallbackTopic}",
             ],
@@ -697,7 +697,7 @@ protected function addArticleConsultationBlock(array $result): array
             $calloutHtml = '<div class="my-6 p-4 rounded-xl bg-concrete-100 border border-concrete-300 flex flex-col sm:flex-row items-center justify-between gap-4 not-prose">'
                 .'<div>'
                 .'<div class="text-xs font-bold uppercase tracking-wider text-teal-700">Konsultasi '.$brandLine.' '.$cityName.'</div>'
-                .'<div class="text-sm font-semibold text-navy-950">Butuh informasi pelatihan atau skema kompetensi pertambangan dan energi?</div>'
+                .'<div class="text-sm font-semibold text-navy-950">Butuh informasi pelatihan atau skema kompetensi K3 Listrik dan energi?</div>'
                 .'</div>'
                 .$calloutAction
                 .'</div>';

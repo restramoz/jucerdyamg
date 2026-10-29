@@ -1,7 +1,7 @@
 {
-  "_fonts-C9MNnjVw.css": {
-    "file": "assets/fonts-C9MNnjVw.css",
-    "src": "_fonts-C9MNnjVw.css"
+  "_fonts-iZg3g7Zp.css": {
+    "file": "assets/fonts-iZg3g7Zp.css",
+    "src": "_fonts-iZg3g7Zp.css"
   },
   "_instrument-sans-400-normal-D1W7dsQl.woff": {
     "file": "assets/instrument-sans-400-normal-D1W7dsQl.woff",
@@ -27,8 +27,16 @@
     "file": "assets/instrument-sans-600-normal-B9e8oLYv.woff",
     "src": "_instrument-sans-600-normal-B9e8oLYv.woff"
   },
+  "_instrument-sans-700-normal-CYfAanHo.woff2": {
+    "file": "assets/instrument-sans-700-normal-CYfAanHo.woff2",
+    "src": "_instrument-sans-700-normal-CYfAanHo.woff2"
+  },
+  "_instrument-sans-700-normal-DfAjL1vF.woff": {
+    "file": "assets/instrument-sans-700-normal-DfAjL1vF.woff",
+    "src": "_instrument-sans-700-normal-DfAjL1vF.woff"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-CFwkllTO.css",
+    "file": "assets/app-DiERT4HY.css",
     "name": "app",
     "names": [
       "app.css"
@@ -37,7 +45,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-CxodTTW9.js",
+    "file": "assets/app-B7xQqS3X.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

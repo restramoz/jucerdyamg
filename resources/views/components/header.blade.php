@@ -1,64 +1,53 @@
-<header class="sticky top-0 z-30 bg-industry-black/95 backdrop-blur-md border-b border-dark-mahogany/80 shadow-md">
+<header class="sticky top-0 z-30 bg-[#061827]/95 backdrop-blur-md border-b border-white/10 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-20">
-            <!-- Brand Logo -->
-            <a href="{{ route('home') }}" class="group flex items-center gap-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange focus-visible:ring-offset-2 focus-visible:ring-offset-industry-black rounded-lg p-1 transition-transform" aria-label="Zonyberg - Beranda">
-                <div class="w-11 h-11 rounded-lg bg-burnt-brick border border-burnt-brick/80 flex items-center justify-center text-white shadow-inner group-hover:border-safety-orange transition-colors">
-                    <!-- Pickaxe / Mining SVG -->
-                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="m14 13-8.381 8.38a1 1 0 0 1-3.001-3L11 9.999" />
-                        <path d="M15.973 4.027A13 13 0 0 0 5.902 2.373c-1.398.342-1.092 2.158.277 2.601a19.9 19.9 0 0 1 5.822 3.024" />
-                        <path d="M16.001 11.999a19.9 19.9 0 0 1 3.024 5.824c.444 1.369 2.26 1.676 2.603.278A13 13 0 0 0 20 8.069" />
-                        <path d="M18.352 3.352a1.205 1.205 0 0 0-1.704 0l-5.296 5.296a1.205 1.205 0 0 0 0 1.704l2.296 2.296a1.205 1.205 0 0 0 1.704 0l5.296-5.296a1.205 1.205 0 0 0 0-1.704z" />
+        <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
+            <!-- Brand -->
+            <a href="{{ route('home') }}" class="group flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#061827] rounded-lg p-1 min-w-0" aria-label="dhanlielektrizitetdenky - Beranda">
+                <span class="w-10 h-10 shrink-0 rounded-lg bg-[#101820] border border-[#00C8F0]/40 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-[#00C8F0]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                     </svg>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-base sm:text-lg font-bold tracking-tight text-white group-hover:text-safety-orange transition-colors">
-                        <span class="text-safety-orange">Zonyberg</span>
-                    </span>
-                    <span class="text-xs text-neutral-300 font-medium tracking-wide">
-                        Pelatihan &amp; Skema Kompetensi Pertambangan dan Energi
-                    </span>
-                </div>
+                </span>
+                <span class="flex flex-col min-w-0">
+                    <span class="text-sm sm:text-base font-extrabold tracking-tight text-white truncate group-hover:text-[#00C8F0] transition-colors">dhanlielektrizitetdenky</span>
+                    <span class="hidden sm:block text-[11px] text-neutral-400 font-medium truncate">Pelatihan &amp; Konsultasi K3 Listrik</span>
+                </span>
             </a>
 
-            <!-- Desktop Navigation -->
+            <!-- Desktop navigation -->
             <nav class="hidden lg:flex items-center gap-7" role="navigation" aria-label="Navigasi Utama Desktop">
-                <a href="{{ route('home') }}#pelatihan" class="text-sm font-semibold text-neutral-200 hover:text-safety-orange transition-colors py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange rounded">
-                    Pelatihan
-                </a>
-                <a href="{{ route('home') }}#keunggulan" class="text-sm font-semibold text-neutral-200 hover:text-safety-orange transition-colors py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange rounded">
-                    Keunggulan
-                </a>
-                <a href="{{ route('home') }}#faq" class="text-sm font-semibold text-neutral-200 hover:text-safety-orange transition-colors py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange rounded">
-                    FAQ
-                </a>
-                <a href="{{ route('articles.index') }}" class="text-sm font-semibold text-neutral-200 hover:text-safety-orange transition-colors py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange rounded">
-                    Artikel
-                </a>
-                <a href="{{ route('home') }}#wilayah" class="text-sm font-semibold text-neutral-200 hover:text-safety-orange transition-colors py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange rounded">
-                    Wilayah
-                </a>
+                @foreach ([
+                    ['Beranda', route('home')],
+                    ['Layanan', route('home') . '#layanan'],
+                    ['Artikel', route('articles.index')],
+                    ['Wilayah', route('home') . '#wilayah'],
+                    ['Keunggulan', route('home') . '#keunggulan'],
+                ] as $item)
+                    @php $isHome = $item[0] === 'Beranda' && request()->routeIs('home'); @endphp
+                    <a href="{{ $item[1] }}"
+                       @if($isHome) aria-current="page" @endif
+                       class="text-sm font-semibold py-2 border-b-2 {{ $isHome ? 'text-white border-[#00C8F0]' : 'text-neutral-300 border-transparent hover:text-white hover:border-[#00C8F0]/50' }} transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] rounded">
+                        {{ $item[0] }}
+                    </a>
+                @endforeach
             </nav>
 
-            <!-- CTA Actions (Desktop) -->
-            <div class="hidden sm:flex items-center gap-3">
-                <x-wa-cta variant="primary" size="sm" label="Konsultasi WhatsApp" class="bg-safety-orange hover:bg-burnt-brick text-industry-black hover:text-white font-bold" />
+            <!-- CTA (Desktop) -->
+            <div class="hidden sm:flex items-center">
+                <x-wa-cta variant="primary" size="sm" label="Konsultasi WhatsApp" class="bg-[#FFB020] hover:bg-[#E09A00] text-[#061827] hover:text-[#061827] font-bold" />
             </div>
 
-            <!-- Mobile Menu Toggle Button -->
-            <div class="flex lg:hidden items-center gap-2">
+            <!-- Mobile Menu Toggle -->
+            <div class="flex lg:hidden items-center">
                 <button type="button"
                         id="mobile-nav-toggle"
                         aria-controls="mobile-nav-drawer"
                         aria-expanded="false"
                         aria-label="Buka menu navigasi utama"
-                        class="p-2.5 rounded-lg text-white hover:text-safety-orange hover:bg-dark-mahogany border border-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange">
-                    <!-- Icon Hamburger -->
+                        class="p-2.5 rounded-lg text-white hover:text-[#00C8F0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0]">
                     <svg id="icon-menu-open" class="w-6 h-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
-                    <!-- Icon Close -->
                     <svg id="icon-menu-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -69,27 +58,23 @@
 
     <!-- Mobile Navigation Drawer -->
     <div id="mobile-nav-drawer"
-         class="hidden lg:hidden bg-industry-black border-b border-dark-mahogany px-4 pt-2 pb-6 transition-all"
+         class="hidden lg:hidden bg-[#061827] border-t border-white/10 px-4 pt-2 pb-6"
          role="navigation"
          aria-label="Navigasi Utama Seluler">
-        <div class="flex flex-col space-y-3 pt-2">
-            <a href="{{ route('home') }}#pelatihan" class="mobile-nav-link text-base font-semibold text-neutral-200 hover:text-safety-orange hover:bg-dark-mahogany px-3 py-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange">
-                Pelatihan
-            </a>
-            <a href="{{ route('home') }}#keunggulan" class="mobile-nav-link text-base font-semibold text-neutral-200 hover:text-safety-orange hover:bg-dark-mahogany px-3 py-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange">
-                Keunggulan
-            </a>
-            <a href="{{ route('home') }}#faq" class="mobile-nav-link text-base font-semibold text-neutral-200 hover:text-safety-orange hover:bg-dark-mahogany px-3 py-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange">
-                FAQ
-            </a>
-            <a href="{{ route('articles.index') }}" class="mobile-nav-link text-base font-semibold text-neutral-200 hover:text-safety-orange hover:bg-dark-mahogany px-3 py-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange">
-                Artikel
-            </a>
-            <a href="{{ route('home') }}#wilayah" class="mobile-nav-link text-base font-semibold text-neutral-200 hover:text-safety-orange hover:bg-dark-mahogany px-3 py-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-safety-orange">
-                Wilayah
-            </a>
-            <div class="pt-3 border-t border-dark-mahogany">
-                <x-wa-cta variant="primary" size="md" class="w-full justify-center bg-safety-orange hover:bg-burnt-brick text-industry-black hover:text-white font-bold" label="Konsultasi Cepat via WhatsApp" />
+        <div class="flex flex-col space-y-1 pt-2">
+            @foreach ([
+                ['Beranda', route('home')],
+                ['Layanan', route('home') . '#layanan'],
+                ['Artikel', route('articles.index')],
+                ['Wilayah', route('home') . '#wilayah'],
+                ['Keunggulan', route('home') . '#keunggulan'],
+            ] as $item)
+                <a href="{{ $item[1] }}" class="mobile-nav-link text-base font-semibold text-neutral-200 hover:text-[#00C8F0] hover:bg-white/5 px-3 py-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0]">
+                    {{ $item[0] }}
+                </a>
+            @endforeach
+            <div class="pt-3 border-t border-white/10">
+                <x-wa-cta variant="primary" size="md" class="w-full justify-center bg-[#FFB020] hover:bg-[#E09A00] text-[#061827] hover:text-[#061827] font-bold" label="Konsultasi Cepat via WhatsApp" />
             </div>
         </div>
     </div>

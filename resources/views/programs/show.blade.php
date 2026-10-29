@@ -61,7 +61,7 @@
                     </div>
                     <div class="min-w-0">
                         <div class="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-400">Sektor</div>
-                        <div class="text-base sm:text-lg font-extrabold text-white mt-0.5">Pertambangan &amp; Energi</div>
+                        <div class="text-base sm:text-lg font-extrabold text-white mt-0.5">K3 Listrik</div>
                     </div>
                     <div class="min-w-0">
                         <div class="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-400">Sifat Program</div>
@@ -87,7 +87,7 @@
                             Tujuan &amp; Ruang Lingkup
                         </span>
                     </div>
-                    <img src="{{ $program['image_url'] ?? 'https://images.unsplash.com/photo-1783428673892-209a796da566?auto=format&fit=crop&w=900&q=80' }}" alt="{{ $program['image_alt'] ?? ($program['title'] . ' — aktivitas pertambangan dan energi') }}" width="900" height="500" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/images/home/hero.webp';" class="w-full aspect-video max-h-[360px] object-cover object-center rounded-2xl shadow-md mb-6" />
+                    <img src="{{ $program['image_url'] ?? '/images/home/sumber-teknisi.jpg' }}" alt="{{ $program['image_alt'] ?? ($program['title'] . ' — aktivitas K3 Listrik') }}" width="900" height="500" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/images/home/sumber-teknisi.jpg';" class="w-full aspect-video max-h-[360px] object-cover object-center rounded-2xl shadow-md mb-6" />
                     <h2 id="pengenalan-heading" class="text-2xl sm:text-3xl font-extrabold text-industry-black tracking-tight">
                         Mengenal Lebih Dekat {{ $program['title'] }}
                     </h2>
@@ -255,16 +255,22 @@
                             Cakupan materi mengacu pada struktur skema kompetensi yang tersedia:
                         </p>
 
-                        <ul class="space-y-3 mb-6" role="list">
-                            @foreach ($program['curriculum_topics'] as $topic)
-                                <li class="flex items-start gap-2.5 text-xs sm:text-sm text-dark-mahogany">
-                                    <svg class="w-4 h-4 text-burnt-brick shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                    <span>{{ $topic }}</span>
-                                </li>
-                            @endforeach
-                        </ul>
+                        @if (!empty($program['curriculum_topics']))
+                            <ul class="space-y-3 mb-6" role="list">
+                                @foreach ($program['curriculum_topics'] as $topic)
+                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-dark-mahogany">
+                                        <svg class="w-4 h-4 text-burnt-brick shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                        <span>{{ $topic }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="mb-6 text-xs sm:text-sm text-dark-mahogany leading-relaxed">
+                                Materi detail ditetapkan berdasarkan kebutuhan pelatihan yang dipilih. Rincian topik, durasi, dan modul dikonfirmasi saat konsultasi.
+                            </p>
+                        @endif
 
                         <div class="pt-5 border-t border-neutral-200">
                             <x-wa-cta variant="primary" size="md" :message="$program['wa_message']" label="Minta Proposal Resmi via WhatsApp" class="w-full justify-center bg-safety-orange hover:bg-burnt-brick text-industry-black hover:text-white font-bold" />

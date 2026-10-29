@@ -17,31 +17,38 @@ class SchemeService
      * Authoritative source files, in a fixed display order.
      */
     protected const SOURCE_FILES = [
-        'gppb' => 'schemes_gppb.json',
-        'esdm' => 'schemes_esdm.json',
-        'pertambangan_mineral_batubara_energi' => 'schemes_pertambangan_mineral_batubara_energi.json',
-        'geo_mineral_batubara_energi' => 'schemes_geo_mineral_batubara_energi.json',
-        'pertambangan_indonesia_mandiri' => 'schemes_pertambangan_indonesia_mandiri.json',
+        'k3listrik' => 'k3listrik.json',
     ];
 
     protected const SOURCE_IMAGES = [
-        'gppb' => 'https://images.unsplash.com/photo-1783428673892-209a796da566?auto=format&fit=crop&w=900&q=80',
-        'esdm' => 'https://images.unsplash.com/photo-1786209273552-3b57dec47c94?auto=format&fit=crop&w=900&q=80',
-        'pertambangan_mineral_batubara_energi' => 'https://images.unsplash.com/photo-1758143011530-e5b46487c4cc?auto=format&fit=crop&w=900&q=80',
-        'geo_mineral_batubara_energi' => 'https://images.unsplash.com/photo-1580544859986-05322c53b1d4?auto=format&fit=crop&w=900&q=80',
-        'pertambangan_indonesia_mandiri' => 'https://images.unsplash.com/photo-1781546441748-cdbefd22a586?auto=format&fit=crop&w=900&q=80',
+        'k3listrik' => '/images/home/sumber-teknisi.jpg',
     ];
 
     /**
      * Descriptive Indonesian alt text specific to each category image.
      */
     protected const SOURCE_IMAGE_ALTS = [
-        'gppb' => 'Eksplorasi geotermal dan infrastruktur energi panas bumi: wilayah vulkanik dengan instalasi sumur dan sistem uap',
-        'esdm' => 'Infrastruktur energi dan sumber daya mineral: fasilitas energi, jaringan, dan pengelolaan sumber daya mineral',
-        'pertambangan_mineral_batubara_energi' => 'Penambangan terbuka batubara dan mineral dengan alat berat, excavator, dan truk pengangkut material',
-        'geo_mineral_batubara_energi' => 'Formasi batuan geologi dan eksplorasi mineral dengan sampel batuan, singkapan, dan pengamatan lapangan',
-        'pertambangan_indonesia_mandiri' => 'Operasi penambangan Indonesia dengan haul truck, fasilitas industri, dan area tambang terbuka',
+        'k3listrik' => 'Teknisi K3 Listrik dengan helm keselamatan di dekat panel listrik dan instalasi kelistrikan industri',
     ];
+
+    /**
+     * Homepage presentation groupings for the unified catalog. Display-only
+     * buckets matched against service names; names, slugs and records stay
+     * untouched. Evaluation order matters: verbs-and-tools, then installation,
+     * then automation, then safety/roles, anything unmatched falls to
+     * Maintenance & Pengukuran.
+     */
+    protected const PRESENTATION_GROUPS = [
+        'maintenance-pengukuran' => ['maintenance', 'pemeliharaan', 'pengoperasian', 'testing', 'commissioning', 'troubleshooting', 'multimeter', 'alat ukur'],
+        'instalasi-proteksi' => ['instalasi', 'inslatasi', 'proteksi', 'grounding', 'wiring', 'distribution', 'panel', 'switchgear', 'switchboard', 'circuit breaker', 'short circuit', 'overcurrent', 'transformator', 'penerangan', 'pju', 'sel surya', 'air conditioning', 'gedung', 'arus kuat', 'komponen listrik'],
+        'otomasi-industri' => ['plc', 'scada', 'otomasi', 'elektronika', 'elektro', 'arus lemah'],
+        'k3-listrik' => ['k3', 'osha', 'arc flash', 'arc blast', 'shock', 'kebakaran', 'bahaya', 'alat pelindung', 'helm', 'sarung tangan', 'gfci', 'inspektur'],
+    ];
+
+    /**
+     * Role keywords for the group fallback (Maintenance & Pengukuran).
+     */
+    protected const PRESENTATION_ROLES = ['engineer', 'technician', 'teknisi', 'operator', 'supervisor', 'manager', 'praktisi', 'pemula'];
 
     protected ?array $programs = null;
 
@@ -74,6 +81,60 @@ class SchemeService
         }
 
         return $this->sources ?? [];
+    }
+
+    /**
+     * Group the unified catalog into the four homepage presentation buckets.
+     * Purely presentational: keyed by each program's slug, order preserved.
+     *
+     * @return array<string, array<string, array>> bucket => slug => program
+     */
+    public function groupedForPresentation(): array
+    {
+        $groups = [
+            'maintenance-pengukuran' => [],
+            'instalasi-proteksi' => [],
+            'otomasi-industri' => [],
+            'k3-listrik' => [],
+        ];
+
+        foreach ($this->load() as $slug => $program) {
+            $t = ' ' . mb_strtolower((string) $program['title']) . ' ';
+
+            if (self::matchesAny(self::PRESENTATION_GROUPS['maintenance-pengukuran'], $t)) {
+                $bucket = 'maintenance-pengukuran';
+            } elseif (self::matchesAny(self::PRESENTATION_GROUPS['instalasi-proteksi'], $t)) {
+                $bucket = 'instalasi-proteksi';
+            } elseif (self::matchesAny(self::PRESENTATION_GROUPS['otomasi-industri'], $t)) {
+                $bucket = 'otomasi-industri';
+            } elseif (self::matchesAny(self::PRESENTATION_GROUPS['k3-listrik'], $t)) {
+                $bucket = 'k3-listrik';
+            } elseif (self::matchesAny(self::PRESENTATION_ROLES, $t)) {
+                $bucket = 'maintenance-pengukuran';
+            } else {
+                $bucket = 'maintenance-pengukuran';
+            }
+
+            $groups[$bucket][$slug] = $program;
+        }
+
+        return $groups;
+    }
+
+    /**
+     * Substring match on the padded lowercase title.
+     *
+     * @param array<int, string> $keywords
+     */
+    protected static function matchesAny(array $keywords, string $lowercasedTitle): bool
+    {
+        foreach ($keywords as $keyword) {
+            if (str_contains($lowercasedTitle, ' ' . $keyword)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function getSource(string $key): ?array
@@ -268,12 +329,23 @@ class SchemeService
      */
     protected function adaptSource(string $sourceKey, string $sourceFile, array $decoded): array
     {
+        // Support the k3listrik.json catalog, which is a top-level list of service names.
+        if (array_is_list($decoded) && isset($decoded[0]) && is_string($decoded[0])) {
+            $serviceNames = array_values(array_filter(array_map('trim', $decoded), static fn (string $v): bool => $v !== ''));
+            $decoded = [
+                'title' => 'K3 Listrik',
+                'schemes' => array_map(
+                    static fn (string $name): array => ['name' => $name, 'lsp' => null, 'units' => []],
+                    $serviceNames
+                ),
+            ];
+        }
+
         if (!isset($decoded['schemes']) || !is_array($decoded['schemes'])) {
-            // Permit a top-level list as a final fallback, but keep strictness.
             throw new \RuntimeException('Scheme source ' . $sourceFile . ' does not contain the expected "schemes" structure.');
         }
 
-        $sourceTitle = trim((string) ($decoded['title'] ?? $sourceFile));
+        $sourceTitle = trim((string) ($decoded['title'] ?? 'K3 Listrik'));
 
         $adapted = [];
         foreach (array_values($decoded['schemes']) as $index => $scheme) {
@@ -311,8 +383,8 @@ class SchemeService
             'count' => count($adapted),
             'scheme_count' => count($adapted),
             'unit_count' => $unitCount,
-            'image_url' => self::SOURCE_IMAGES[$sourceKey] ?? 'https://images.unsplash.com/photo-1783428673892-209a796da566?auto=format&fit=crop&w=900&q=80',
-            'image_alt' => self::SOURCE_IMAGE_ALTS[$sourceKey] ?? 'Aktivitas pertambangan dan energi',
+            'image_url' => self::SOURCE_IMAGES[$sourceKey] ?? '/images/home/sumber-teknisi.jpg',
+            'image_alt' => self::SOURCE_IMAGE_ALTS[$sourceKey] ?? 'Pelatihan K3 Listrik dan kelistrikan industri',
         ];
 
         return [$meta, $adapted];
@@ -418,28 +490,28 @@ class SchemeService
             'source_file' => $sourceFile,
             'source_index' => $scheme['source_index'] ?? null,
             'slug' => $slug,
-            'image_url' => self::SOURCE_IMAGES[$sourceKey] ?? 'https://images.unsplash.com/photo-1783428673892-209a796da566?auto=format&fit=crop&w=900&q=80',
-            'image_alt' => self::SOURCE_IMAGE_ALTS[$sourceKey] ?? 'Aktivitas pertambangan dan energi',
-            'category' => 'scheme',
-            'category_label' => 'Skema Kompetensi',
-            'sector' => 'pertambangan-mineral-batubara-energi',
-            'level' => $lsp ?? 'Skema Kompetensi',
+            'image_url' => self::SOURCE_IMAGES[$sourceKey] ?? '/images/home/sumber-teknisi.jpg',
+            'image_alt' => self::SOURCE_IMAGE_ALTS[$sourceKey] ?? 'Pelatihan K3 Listrik dan kelistrikan industri',
+            'category' => 'training-service',
+            'category_label' => 'Layanan Pelatihan K3 Listrik',
+            'sector' => 'k3-listrik',
+            'level' => $lsp ?? 'Layanan K3 Listrik',
             'title' => $name,
-            'badge' => $lsp ?? 'Skema Kompetensi',
-            'meta_title' => $name . ' | Skema Kompetensi',
-            'meta_description' => 'Skema kompetensi ' . $name . ': ' . $unitCount . ' unit kompetensi. Rincian unit dan kode disertakan; penyelenggaraan dikonfirmasi melalui konsultasi.',
-            'hero_heading' => 'Skema',
+            'badge' => $lsp ?? 'Layanan K3 Listrik',
+            'meta_title' => $name . ' | K3 Listrik',
+            'meta_description' => 'Layanan pelatihan K3 Listrik ' . $name . '. Rincian program dikonfirmasi melalui konsultasi.',
+            'hero_heading' => 'Pelatihan K3 Listrik',
             'hero_highlight' => $name,
-            'hero_subheading' => 'Daftar unit kompetensi skema ' . $name . ' tersedia pada halaman ini; rincian penyelenggaraan dikonfirmasi melalui konsultasi.',
-            'wa_message' => 'Halo, saya ingin konsultasi mengenai skema ' . $name . '.',
-            'introduction' => 'Skema kompetensi ' . $name . ' mencakup ' . $unitCount . ' unit kompetensi terkait pertambangan, mineral, batubara, dan energi. Daftar unit beserta kode unit disertakan pada halaman ini. Persyaratan penyelenggaraan dikonfirmasi melalui konsultasi.',
+            'hero_subheading' => 'Informasi layanan pelatihan K3 Listrik ' . $name . '; rincian penyelenggaraan dikonfirmasi melalui konsultasi.',
+            'wa_message' => 'Halo, saya ingin konsultasi mengenai ' . $name . '.',
+            'introduction' => 'Layanan ' . $name . ' merupakan bagian dari program pelatihan K3 Listrik. Rincian kurikulum dan persyaratan penyelenggaraan dikonfirmasi melalui konsultasi.',
             'target_audience' => [
-                'Tenaga kerja, pengawas, teknisi, dan badan usaha pada sektor pertambangan, mineral, batubara, dan energi; kecocokan latar belakang dikonfirmasi melalui konsultasi.',
+                'Tenaga kerja, pengawas, teknisi, operator, dan profesional yang bekerja pada instalasi kelistrikan dan sistem tenaga listrik; kecocokan latar belakang dikonfirmasi melalui konsultasi.',
             ],
             'roles_and_responsibilities' => [
                 [
                     'title' => 'Kompetensi Skema',
-                    'description' => 'Unit-unit berikut menjadi lingkup kompetensi yang dinilai pada skema ini.',
+                    'description' => 'Rincian lingkup materi layanan ini dikonfirmasi melalui konsultasi.',
                 ],
             ],
             'curriculum_topics' => array_map(

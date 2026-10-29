@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $program['title'] . ' — ' . $city['name'])
-@section('meta_description', 'Informasi dan konsultasi ' . $program['title'] . ' untuk mitra pertambangan dan energi, fasilitas produksi, dan tenaga profesional pertambangan dan energi di ' . $city['name'] . ', Provinsi ' . $city['province'] . '. Rincian skema, unit kompetensi, dan persyaratan penyelenggaraan.')
+@section('meta_description', 'Informasi dan konsultasi ' . $program['title'] . ' untuk mitra K3 Listrik, fasilitas produksi, dan tenaga profesional K3 Listrik di ' . $city['name'] . ', Provinsi ' . $city['province'] . '. Rincian skema, unit kompetensi, dan persyaratan penyelenggaraan.')
 @section('wa_message', $waMessage)
 
 @section('content')
@@ -68,7 +68,7 @@
                     </div>
                     <div>
                         <div class="text-xs font-semibold uppercase tracking-wider text-neutral-400">Sektor</div>
-                        <div class="text-lg sm:text-xl font-extrabold text-safety-orange mt-0.5">Pertambangan &amp; Energi</div>
+                        <div class="text-lg sm:text-xl font-extrabold text-safety-orange mt-0.5">K3 Listrik</div>
                     </div>
                     <div>
                         <div class="text-xs font-semibold uppercase tracking-wider text-neutral-400">Sifat Program</div>
@@ -104,8 +104,8 @@
                                 </svg>
                             </div>
                             <div class="text-sm text-dark-mahogany leading-relaxed">
-                                <span class="font-bold text-industry-black block mb-0.5">Fokus Keselamatan Kerja Pertambangan &amp; Energi</span>
-                                Program diarahkan pada pemahaman skema kompetensi, praktik kerja yang baik, dan pemeliharaan keselamatan kerja pada kegiatan pertambangan dan energi di wilayah {{ $city['name'] }} dan sekitarnya.
+                                <span class="font-bold text-industry-black block mb-0.5">Fokus Keselamatan Kerja K3 Listrik</span>
+                                Program diarahkan pada pemahaman skema kompetensi, praktik kerja yang baik, dan pemeliharaan keselamatan kerja pada kegiatan K3 Listrik di wilayah {{ $city['name'] }} dan sekitarnya.
                             </div>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
                     <div class="text-sm space-y-1">
                         <h4 class="font-bold text-industry-black">Perhatian: Pembedaan Praktik Kerja Lapangan &amp; Persyaratan Sertifikasi / Dokumen</h4>
                         <p class="text-dark-mahogany leading-relaxed">
-                            Uraian peran di atas merupakan ringkasan umum lingkup operasional pada sektor Pertambangan &amp; Energi. Persyaratan administratif formal ditentukan oleh skema layanan dan ketentuan yang berlaku. Calon peserta atau badan usaha dari {{ $city['name'] }} dianjurkan mengonfirmasikan berkas pribadinya kepada konsultan kami sebelum proses pendaftaran.
+                            Uraian peran di atas merupakan ringkasan umum lingkup operasional pada sektor K3 Listrik. Persyaratan administratif formal ditentukan oleh skema layanan dan ketentuan yang berlaku. Calon peserta atau badan usaha dari {{ $city['name'] }} dianjurkan mengonfirmasikan berkas pribadinya kepada konsultan kami sebelum proses pendaftaran.
                         </p>
                     </div>
                 </div>
@@ -257,16 +257,22 @@
                             Materi dan deliverables mengacu pada struktur skema kompetensi yang tersedia:
                         </p>
 
-                        <ul class="space-y-3 mb-6" role="list">
-                            @foreach ($program['curriculum_topics'] as $topic)
-                                <li class="flex items-start gap-2.5 text-xs sm:text-sm text-dark-mahogany">
-                                    <svg class="w-4 h-4 text-burnt-brick shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                    <span>{{ $topic }}</span>
-                                </li>
-                            @endforeach
-                        </ul>
+                        @if (!empty($program['curriculum_topics']))
+                            <ul class="space-y-3 mb-6" role="list">
+                                @foreach ($program['curriculum_topics'] as $topic)
+                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-dark-mahogany">
+                                        <svg class="w-4 h-4 text-burnt-brick shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                        <span>{{ $topic }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="mb-6 text-xs sm:text-sm text-dark-mahogany leading-relaxed">
+                                Materi detail ditetapkan berdasarkan kebutuhan pelatihan yang dipilih. Rincian topik, durasi, dan modul dikonfirmasi saat konsultasi.
+                            </p>
+                        @endif
 
                         <div class="pt-5 border-t border-neutral-200">
                             <x-wa-cta variant="primary" size="md" :message="$waMessage" label="Minta Silabus / Rincian via WhatsApp" class="w-full justify-center bg-safety-orange hover:bg-burnt-brick text-industry-black hover:text-white font-bold" />

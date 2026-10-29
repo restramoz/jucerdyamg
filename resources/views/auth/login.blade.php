@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Login Administrator — Zonyberg')
-@section('meta_description', 'Masuk ke panel manajemen administrator Zonyberg.')
+@section('title', 'Login Administrator — dhanlielektrizitetdenky')
+@section('meta_description', 'Masuk ke panel manajemen administrator dhanlielektrizitetdenky.')
 
 @section('content')
 <div class="min-h-[75vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-neutral-50">
@@ -18,7 +18,7 @@
                 Admin Panel Login
             </h1>
             <p class="text-xs text-dark-mahogany">
-                Akses terbatas untuk administrator Zonyberg
+                Akses terbatas untuk administrator dhanlielektrizitetdenky
             </p>
         </div>
 

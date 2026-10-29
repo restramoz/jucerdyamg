@@ -1,354 +1,610 @@
 @extends('layouts.app')
 
-@section('title', 'Zonyberg — Pelatihan & Skema Kompetensi pertambangan dan energi')
-@section('meta_description', 'Katalog skema kompetensi dan program pelatihan pertambangan dan energi: rincian unit kompetensi, penyelenggara, serta layanan konsultasi untuk kebutuhan Pertambangan &amp; Energi.')
+@section('title', 'dhanlielektrizitetdenky — Pelatihan & Konsultasi K3 Listrik')
+
+@section('meta_description', 'Katalog 60 layanan pelatihan K3 Listrik dan konsultasi keselamatan kelistrikan: instalasi, proteksi, otomasi industri, serta maintenance dan pengukuran.')
 
 @section('content')
-<noscript>
-    <style>.scheme-extra[hidden]{display:block!important;}</style>
-</noscript>
 @php
-    $regionalService = resolve(App\Services\RegionalService::class);
     $regionalService = resolve(App\Services\RegionalService::class);
     $provinces = $regionalService->getAllProvinces();
-    $allPrograms = app(\App\Services\SchemeService::class)->all();
+
+    $groups = app(\App\Services\SchemeService::class)->groupedForPresentation();
+
+    $groupMeta = [
+        'k3-listrik' => [
+            'title' => 'K3 Listrik',
+            'desc' => 'Dasar keselamatan kelistrikan: bahaya listrik, arc flash, APD, dan penanganan kecelakaan listrik.',
+            'image' => '/images/home/panel-k3-switchgear.jpg',
+            'alt' => 'Panel switchgear industri dengan tanda bahaya tegangan listrik berbahaya',
+        ],
+        'instalasi-proteksi' => [
+            'title' => 'Instalasi & Proteksi',
+            'desc' => 'Instalasi listrik tenaga, grounding, proteksi beban lebih, hingga switchgear dan transformator.',
+            'image' => '/images/home/panel-instalasi-listrik.jpg',
+            'alt' => 'Teknisi listrik memasang instalasi penerangan pada bangunan',
+        ],
+        'otomasi-industri' => [
+            'title' => 'Otomasi Industri',
+            'desc' => 'PLC, SCADA, elektronika industri, dan sistem kontrol otomasi pada fasilitas produksi.',
+            'image' => '/images/home/panel-otomasi-industri.jpg',
+            'alt' => 'Insinyur otomasi industri bekerja dengan laptop di sel produksi',
+        ],
+        'maintenance-pengukuran' => [
+            'title' => 'Maintenance & Pengukuran',
+            'desc' => 'Troubleshooting kelistrikan, testing dan commissioning, serta penggunaan alat ukur listrik.',
+            'image' => '/images/home/panel-pengukuran-multimeter.jpg',
+            'alt' => 'Pengukuran rangkaian elektronika menggunakan multimeter',
+        ],
+    ];
+
+    $groupIcons = [
+        'k3-listrik' => 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+        'instalasi-proteksi' => 'M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z',
+        'otomasi-industri' => 'M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33h0a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51h0a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v0a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z',
+        'maintenance-pengukuran' => 'M12 3v3m0 12v3M3 12h3m12 0h3M6.3 6.3l2.1 2.1m7.2 7.2l2.1 2.1M6.3 17.7l2.1-2.1m7.2-7.2l2.1-2.1M14 12a2 2 0 11-4 0 2 2 0 014 0z',
+    ];
+
+    $latestArticles = \App\Models\Article::published()
+        ->orderBy('published_at', 'desc')
+        ->take(4)
+        ->get();
 @endphp
 
-    <!-- HERO SECTION (LIGHT SURFACE) -->
-    <section class="relative bg-white text-dark-mahogany overflow-hidden border-b border-neutral-200" aria-labelledby="hero-heading">
-        <!-- Subtle Grid Pattern Accent -->
-        <div class="absolute inset-0 opacity-[0.04] pointer-events-none" aria-hidden="true">
-            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0F5132" stroke-width="1" />
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid-pattern)" />
-            </svg>
-        </div>
+{{-- A. HERO --}}
+<section id="home"
+         class="relative overflow-hidden bg-[#061827] text-white"
+         aria-labelledby="hero-heading">
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-            <div class="max-w-3xl">
-                <!-- Mobile Hero Image - Responsive with aspect-ratio -->
-                <div class="lg:hidden mb-6">
-                    <img src="https://images.unsplash.com/photo-1783428673892-209a796da566?auto=format&fit=crop&w=1600&q=80" alt="Aktivitas pertambangan Indonesia: alat berat beroperasi di area tambang terbuka" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" class="hero-image-mobile w-full object-cover object-center rounded-xl shadow-md" />
-                </div>
-                <!-- Focus Badge -->
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-mahogany text-white text-xs sm:text-sm font-semibold mb-5 shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-safety-orange animate-pulse"></span>
-                    Pelatihan &amp; Skema Kompetensi pertambangan dan energi
-                </div>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
 
-                <!-- Main Heading - Responsive with clamp() -->
-                <h1 id="hero-heading" class="font-extrabold tracking-tight text-industry-black leading-tight uppercase text-[clamp(1.875rem,4.5vw,3.125rem)] sm:text-[clamp(2.25rem,5vw,3.75rem)] lg:text-[clamp(2.5rem,4.5vw,4.5rem)]">
-                    Pelatihan <span class="text-burnt-brick">pertambangan dan energi</span> &amp; Skema Kompetensi
+            <div class="flex flex-col justify-center py-10 sm:py-16 lg:py-24">
+
+                <span class="inline-flex self-start items-center gap-2 rounded-full border border-[#00C8F0]/60 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-[#00C8F0] sm:text-sm">
+                    <svg class="h-4 w-4"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                    </svg>
+                    Pelatihan &amp; Konsultasi K3 Listrik
+                </span>
+
+                <h1 id="hero-heading"
+                    class="mt-5 text-3xl font-extrabold leading-tight tracking-tight sm:mt-6 sm:text-5xl xl:text-6xl">
+                    Meningkatkan Kompetensi,
+                    <span class="text-[#00C8F0]">
+                        Menjaga Keselamatan&nbsp;Kerja
+                    </span>
                 </h1>
 
-                <!-- Subheading / Paragraph -->
-                <p class="mt-5 text-sm sm:text-base lg:text-lg text-dark-mahogany leading-relaxed max-w-2xl">
-                    Jelajahi skema kompetensi pertambangan dan energi dengan rincian unit lengkap, atau konsultasikan kebutuhan pelatihan dan pertambangan dan energi Anda — dari hulu produksi hingga pengolahan dan pemasaran hasil pertambangan dan energi.
+                <p class="mt-5 max-w-xl text-sm leading-relaxed text-slate-300 sm:mt-6 sm:text-lg">
+                    Program pelatihan K3 Listrik untuk teknisi, operator, dan profesional industri — dari
+                    pemahaman bahaya listrik, instalasi dan proteksi, otomasi industri, hingga maintenance
+                    serta pengukuran listrik secara aman dan benar.
                 </p>
 
-                <!-- Actions - Full width on mobile, auto on larger screens -->
-                <div class="mt-7 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
-                    <x-wa-cta variant="primary" size="lg" label="Konsultasi Program via WhatsApp" class="w-full sm:w-auto shadow-md bg-safety-orange hover:bg-burnt-brick text-industry-black hover:text-white font-bold" />
-                    <x-button href="#pelatihan" variant="secondary" size="lg" class="w-full sm:w-auto bg-white hover:bg-neutral-100 text-dark-mahogany font-bold border-2 border-dark-mahogany">
-                        Lihat Program Pelatihan
-                    </x-button>
+                <div class="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:gap-4">
+                    <x-wa-cta
+                        variant="primary"
+                        size="lg"
+                        label="Konsultasi Program via WhatsApp"
+                        class="w-full bg-[#FFB020] font-bold text-[#061827] shadow-lg hover:bg-[#E09A00] hover:text-[#061827] sm:w-auto"
+                    />
+
+                    <a href="#layanan"
+                       class="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border-2 border-white/40 px-6 py-3 text-center text-sm font-bold text-white transition-colors hover:border-[#00C8F0] hover:text-[#00C8F0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#061827] sm:w-auto sm:px-7 sm:text-base">
+                        Lihat Semua Layanan
+                    </a>
                 </div>
 
-                <!-- Desktop Hero Image - Full width with proper responsive handling -->
-                <div class="hidden lg:block mt-10 -mx-4 sm:-mx-6 lg:-mx-8">
-                    <img src="https://images.unsplash.com/photo-1783428673892-209a796da566?auto=format&fit=crop&w=1600&q=80" alt="Aktivitas pertambangan Indonesia: alat berat beroperasi di area tambang terbuka" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" class="hero-image-desktop w-full object-cover object-center" />
-                </div>
+                <div class="mt-7 grid grid-cols-2 gap-3 sm:mt-9 sm:gap-4">
+                    <div class="rounded-xl border border-white/10 bg-white/5 p-3 sm:p-4">
+                        <p class="text-xl font-extrabold text-[#00C8F0] sm:text-2xl">60</p>
+                        <p class="mt-1 text-xs leading-relaxed text-slate-300 sm:text-sm">
+                            Topik dan layanan pelatihan
+                        </p>
+                    </div>
 
-                <!-- Value Highlights Grid - Responsive with min-width protection -->
-                <div class="mt-8 pt-6 border-t border-neutral-300 stats-grid">
-                    <div class="stat-item min-w-0">
-                        <div class="stat-value text-xl sm:text-2xl font-extrabold text-burnt-brick">{{ count($allPrograms) }}</div>
-                        <div class="stat-label text-[11px] sm:text-xs text-dark-mahogany mt-0.5 font-semibold leading-snug">Skema Kompetensi</div>
-                    </div>
-                    <div class="stat-item min-w-0">
-                        <div class="stat-value text-xl sm:text-2xl font-extrabold text-industry-black">Lingkup</div>
-                        <div class="stat-label text-[11px] sm:text-xs text-dark-mahogany mt-0.5 font-semibold leading-snug">Pertambangan &amp; Energi</div>
-                    </div>
-                    <div class="stat-item min-w-0">
-                        <div class="stat-value text-xl sm:text-2xl font-extrabold text-burnt-brick">Konsultasi</div>
-                        <div class="stat-label text-[11px] sm:text-xs text-dark-mahogany mt-0.5 font-semibold leading-snug">Konfirmasi penyelenggaraan</div>
-                    </div>
-                    <div class="stat-item min-w-0">
-                        <div class="stat-value text-xl sm:text-2xl font-extrabold text-industry-black">Nasional</div>
-                        <div class="stat-label text-[11px] sm:text-xs text-dark-mahogany mt-0.5 font-semibold leading-snug">Jangkauan {{ count($provinces) }} Provinsi</div>
+                    <div class="rounded-xl border border-white/10 bg-white/5 p-3 sm:p-4">
+                        <p class="text-xl font-extrabold text-[#00C8F0] sm:text-2xl">4</p>
+                        <p class="mt-1 text-xs leading-relaxed text-slate-300 sm:text-sm">
+                            Kelompok bidang kelistrikan
+                        </p>
                     </div>
                 </div>
+            </div>
+
+            <div class="relative min-w-0 pb-8 lg:pb-0">
+                <div class="relative h-[260px] overflow-hidden rounded-2xl border border-white/10 shadow-2xl sm:h-[380px] lg:h-[540px]">
+
+                    <img src="/images/home/hero-electrician-panel.jpg"
+                         alt="Teknisi listrik menggunakan APD saat bekerja pada panel listrik"
+                         width="1600"
+                         height="1200"
+                         loading="eager"
+                         fetchpriority="high"
+                         decoding="async"
+                         onerror="this.onerror=null;this.src='/images/home/panel-otomasi-industri.jpg';"
+                         class="absolute inset-0 h-full w-full object-cover object-center" />
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#061827]/90 via-[#061827]/10 to-transparent"
+                         aria-hidden="true"></div>
+
+                    <div class="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                        <span class="inline-flex rounded-full border border-[#00C8F0]/40 bg-[#061827]/80 px-3 py-1 text-xs font-bold text-[#00C8F0] backdrop-blur-sm">
+                            Keselamatan Kelistrikan
+                        </span>
+
+                        <h2 class="mt-3 max-w-md text-xl font-extrabold leading-tight text-white sm:text-2xl lg:text-3xl">
+                            Kompetensi Listrik Dimulai dari Keselamatan
+                        </h2>
+
+                        <p class="mt-2 max-w-md text-sm leading-relaxed text-slate-200">
+                            Pelajari prinsip kerja aman, instalasi, proteksi, dan pemeliharaan sistem kelistrikan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{{-- B. KATEGORI LAYANAN --}}
+<section id="layanan"
+         class="bg-[#F4F7FA] py-12 sm:py-16 lg:py-20"
+         aria-labelledby="layanan-heading">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-3xl text-center lg:mx-0 lg:text-left">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#0F7FA8] sm:text-sm">
+                Layanan Kami
+            </span>
+
+            <h2 id="layanan-heading"
+                class="mt-2 text-2xl font-extrabold tracking-tight text-[#101820] sm:text-3xl lg:text-4xl">
+                Program Pelatihan
+                <span class="text-[#0F9BC4]">K3 Listrik</span>
+            </h2>
+
+            <p class="mt-4 text-sm leading-relaxed text-[#344054] sm:text-base">
+                Jelajahi katalog pelatihan kelistrikan yang dikelompokkan berdasarkan bidang kompetensi.
+                Setiap layanan memiliki halaman rincian dan dapat dikonsultasikan melalui WhatsApp.
+            </p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 items-start gap-5 md:grid-cols-2 lg:mt-10 lg:gap-6">
+
+            @foreach (['k3-listrik', 'instalasi-proteksi', 'otomasi-industri', 'maintenance-pengukuran'] as $groupKey)
+                @php
+                    $meta = $groupMeta[$groupKey];
+                    $iconPath = $groupIcons[$groupKey];
+                    $items = $groups[$groupKey] ?? [];
+                    $total = count($items);
+                @endphp
+
+                <article data-show-group
+                         class="group min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg">
+
+                    <div class="relative h-40 overflow-hidden sm:h-48 lg:h-56">
+                        <img src="{{ $meta['image'] }}"
+                             alt="{{ $meta['alt'] }}"
+                             width="900"
+                             height="700"
+                             loading="lazy"
+                             decoding="async"
+                             onerror="this.onerror=null;this.src='/images/home/hero-electrician-panel.jpg';"
+                             class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]" />
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#061827]/65 via-transparent to-transparent"
+                             aria-hidden="true"></div>
+
+                        <span class="absolute right-3 top-3 inline-flex max-w-[90%] items-center rounded-lg bg-[#061827]/90 px-3 py-1.5 text-xs font-bold text-[#00C8F0] shadow-sm backdrop-blur-sm">
+                            {{ $meta['title'] }} · {{ $total }} layanan
+                        </span>
+                    </div>
+
+                    <div class="flex flex-col p-4 sm:p-6">
+
+                        <div class="flex items-center gap-3">
+                            <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#061827] text-[#00C8F0] sm:h-11 sm:w-11">
+                                <svg class="h-5 w-5"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="1.8"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     aria-hidden="true">
+                                    <path d="{{ $iconPath }}" />
+                                </svg>
+                            </span>
+
+                            <h3 class="text-lg font-extrabold leading-snug tracking-tight text-[#101820] sm:text-xl">
+                                {{ $meta['title'] }}
+                            </h3>
+                        </div>
+
+                        <p class="mt-3 text-sm leading-relaxed text-[#475467]">
+                            {{ $meta['desc'] }}
+                        </p>
+
+                        <ul id="layanan-list-{{ $groupKey }}"
+                            class="mt-5 grid grid-cols-1 gap-3"
+                            role="list">
+
+                            @foreach ($items as $slug => $item)
+                                <li class="min-w-0 {{ $loop->index >= 4 ? 'scheme-extra' : '' }}"
+                                    @if ($loop->index >= 4) hidden @endif>
+
+                                    <div class="flex h-full flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 transition-all hover:border-[#0F9BC4] hover:bg-white sm:flex-row sm:items-center sm:justify-between">
+
+                                        <div class="min-w-0 flex-1">
+                                            <a href="{{ route('program.show', $slug) }}"
+                                               class="block text-sm font-bold leading-relaxed text-[#101820] transition-colors hover:text-[#0F9BC4] focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] sm:text-base">
+                                                {{ $item['title'] }}
+                                            </a>
+
+                                            <a href="{{ route('program.show', $slug) }}"
+                                               class="mt-2 inline-flex min-h-[24px] items-center text-sm font-bold text-[#0F9BC4] transition-colors hover:text-[#061827] focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0]">
+                                                Lihat Detail
+                                                <span class="ml-1" aria-hidden="true">→</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="shrink-0">
+                                            <x-wa-cta
+                                                variant="wa"
+                                                size="sm"
+                                                :message="$item['wa_message']"
+                                                label="Konsultasi"
+                                                class="w-full bg-[#FFB020] px-4 py-2 text-sm font-bold text-[#061827] hover:bg-[#E09A00] hover:text-[#061827] sm:w-auto"
+                                            />
+                                        </div>
+
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+
+                        @if ($total > 4)
+                            <button type="button"
+                                    class="js-show-all mt-5 inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border-2 border-[#00C8F0] px-5 py-3 text-sm font-bold text-[#0F7FA8] transition-colors hover:bg-[#00C8F0] hover:text-[#061827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] focus-visible:ring-offset-2 sm:w-auto sm:self-start"
+                                    data-all-label="Lihat Semua {{ $total }} Layanan"
+                                    data-less-label="Sembunyikan"
+                                    aria-expanded="false"
+                                    aria-controls="layanan-list-{{ $groupKey }}">
+                                Lihat Semua {{ $total }} Layanan
+                            </button>
+                        @endif
+
+                    </div>
+                </article>
+            @endforeach
+
+        </div>
+    </div>
+</section>
+
+{{-- C. KEUNGGULAN --}}
+<section id="keunggulan"
+         class="overflow-hidden bg-[#101820] text-white"
+         aria-labelledby="keunggulan-heading">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2">
+
+        <div class="relative min-h-[260px] overflow-hidden sm:min-h-[340px] lg:min-h-[600px]">
+            <img src="/images/home/feature-lineworker-ppe.jpg"
+                 alt="Teknisi listrik menggunakan perlengkapan keselamatan saat bekerja pada jaringan listrik"
+                 width="1200"
+                 height="1600"
+                 loading="lazy"
+                 decoding="async"
+                 onerror="this.onerror=null;this.src='/images/home/hero-electrician-panel.jpg';"
+                 class="absolute inset-0 h-full w-full object-cover object-center" />
+
+            <div class="absolute inset-0 bg-gradient-to-t from-[#101820]/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#101820]"
+                 aria-hidden="true"></div>
+
+            <div class="absolute bottom-0 left-0 right-0 p-5 sm:p-8 lg:hidden">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#00C8F0]">
+                    Keselamatan Kerja
+                </span>
+                <h3 class="mt-2 max-w-md text-xl font-extrabold sm:text-2xl">
+                    Bekerja Aman, Kompetensi Terjaga
+                </h3>
             </div>
         </div>
-    </section>
 
-@php
-    $ambasisi = [];
-    $lspNusantara = [];
-    foreach ($allPrograms as $slug => $item) {
-        if (($item['lsp'] ?? null) === null) {
-            $ambasisi[$slug] = $item;
-        } elseif (($item['lsp'] ?? '') === 'LSP pertambangan dan energi Nusantara') {
-            $lspNusantara[$slug] = $item;
-        }
-    }
-@endphp
+        <div class="relative flex flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 lg:px-12 lg:py-20 xl:px-16">
 
-    <!-- SECTION: SKEMA KOMPETENSI PER SUMBER -->
-@php
-    $grouped = [];
-    foreach ($allPrograms as $slug => $item) {
-        $key = (string) ($item['source'] ?? $item['source_key'] ?? 'source');
-        $grouped[$key][$slug] = $item;
-    }
-    $schemeSources = app(\App\Services\SchemeService::class)->sources();
-@endphp
-@foreach($schemeSources as $sourceKey => $sourceMeta)
-    @php
-        $sourceItems = $grouped[$sourceKey] ?? [];
-        $sourceTitle = (string) ($sourceMeta['title'] ?? $sourceMeta['source_title'] ?? $sourceKey);
-        $sourceImage = (string) ($sourceMeta['image_url'] ?? '');
-        $sourceAlt = (string) ($sourceMeta['image_alt'] ?? ($sourceTitle . ' — aktivitas pertambangan dan energi'));
-    @endphp
-    <section id="skema-{{ $sourceKey }}" data-scheme-section="{{ $sourceKey }}" class="py-16 sm:py-24 {{ $loop->even ? 'bg-neutral-50' : 'bg-white' }} border-t border-neutral-200" aria-labelledby="heading-{{ $sourceKey }}">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center mb-10">
-                <div class="lg:col-span-2 text-center lg:text-left">
-                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-copper bg-neutral-100 px-3 py-1 rounded-full border border-copper/20">
-                        Katalog Skema
-                    </span>
-                    <h2 id="heading-{{ $sourceKey }}" class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-extrabold text-secondary tracking-tight">
-                        {{ $sourceTitle }}
-                    </h2>
-                    <p class="mt-4 text-base text-body leading-relaxed">
-                        Kelompok sumber ini berisi {{ count($sourceItems) }} skema kompetensi pertambangan dan energi. Data menampilkan 6 skema terlebih dahulu; pilih "Lihat Semua Skema" untuk melihat seluruhnya.
-                    </p>
-                </div>
-                <div class="block">
-                    <img src="{{ $sourceImage ?: 'https://images.unsplash.com/photo-1783428673892-209a796da566?auto=format&fit=crop&w=900&q=80' }}" alt="{{ $sourceAlt }}" width="900" height="600" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/images/home/hero.webp';" class="w-full aspect-video object-cover object-center rounded-2xl shadow-md" />
-                </div>
-            </div>
+            <span class="text-xs font-bold uppercase tracking-widest text-[#00C8F0] sm:text-sm">
+                Kenapa Memilih Kami
+            </span>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="grid-{{ $sourceKey }}">
-                @foreach($sourceItems as $slug => $item)
-                    @php $extra = $loop->iteration > 6; @endphp
-                    <div class="scheme-card {{ $extra ? 'scheme-extra' : '' }} flex flex-col bg-white rounded-xl border border-neutral-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden group" data-scheme-slug="{{ $slug }}" data-scheme-category="{{ $sourceKey }}" data-unit-count="{{ count($item['units']) }}" @if($extra) hidden @endif>
-                        <div class="h-1.5 bg-copper"></div>
-                        <div class="p-5 flex-1 flex flex-col">
-                            <div class="flex items-center justify-between gap-2 mb-3">
-                                <span class="text-xs font-bold uppercase tracking-wider text-body break-words">{{ $item['source_title'] }}</span>
-                                <span class="text-[10px] bg-neutral-100 text-body px-2 py-0.5 rounded font-semibold border border-neutral-200 shrink-0">{{ count($item['units']) }} unit</span>
-                            </div>
-                            <h3 class="text-base font-bold text-secondary mb-2 group-hover:text-copper transition-colors break-words">
-                                {{ $item['title'] }}
-                            </h3>
-                            <p class="text-xs text-body mb-4">
-                                {{ count($item['units']) }} unit kompetensi
-                            </p>
-                            <div class="space-y-2 mt-auto">
-                                <x-wa-cta variant="secondary" size="md" :message="$item['wa_message']" :label="'Konsultasi ' . $item['title']" class="w-full justify-center text-xs" />
-                                <a href="{{ route('program.show', $slug) }}" class="inline-flex items-center justify-center w-full text-xs font-bold text-copper hover:text-gold transition-colors py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper rounded">
-                                    Detail Skema &amp; Unit &rarr;
-                                </a>
-                            </div>
-                        </div>
+            <h2 id="keunggulan-heading"
+                class="mt-3 max-w-xl text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
+                Pelatihan yang Berorientasi pada Keselamatan Kerja
+            </h2>
+
+            <p class="mt-4 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
+                Layanan K3 Listrik kami tersusun sebagai katalog pembelajaran kompetensi dengan penekanan
+                pada bahaya listrik, prosedur kerja aman, dan praktik lapangan. Rincian setiap program
+                bisa dikonsultasikan langsung.
+            </p>
+
+            <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-5 sm:mt-10 sm:grid-cols-2 sm:gap-y-7">
+
+                @foreach ([
+                    ['M13 2L3 14h9l-1 8 10-12h-9l1-8z', 'Instruktur Berpengalaman'],
+                    ['M4 6h16M4 10h16M4 14h10M4 18h6', 'Materi Terstruktur dan Aplikatif'],
+                    ['M8 3v18M16 3v18M3 8h18M3 16h18', 'Metode Pembelajaran Interaktif'],
+                    ['M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4zM9 12l2 2 4-4', 'Fokus pada Keselamatan Kerja'],
+                ] as $feature)
+
+                    <div class="flex items-start gap-3">
+                        <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/5">
+                            <svg class="h-6 w-6 text-[#00C8F0]"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <path d="{{ $feature[0] }}" />
+                            </svg>
+                        </span>
+
+                        <p class="pt-2 text-sm font-semibold leading-relaxed text-white sm:text-base">
+                            {{ $feature[1] }}
+                        </p>
                     </div>
+
                 @endforeach
             </div>
 
-            <div class="mt-10 text-center">
-                <button type="button" class="js-show-all inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-white bg-copper hover:bg-gold hover:text-secondary rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper transition-colors" aria-expanded="false" data-extra-count="{{ max(0, count($sourceItems) - 6) }}">
-                    Lihat Semua Skema
-                </button>
-                <p class="mt-3 text-xs text-body">
-                    Menampilkan 6 dari {{ count($sourceItems) }} skema. Saat diperluas, seluruh {{ count($sourceItems) }} skema tampil; pilih tombol yang sama untuk menampilkan lebih sedikit.
-                </p>
+            <div class="mt-8 sm:mt-10">
+                <a href="#layanan"
+                   class="inline-flex min-h-[46px] items-center justify-center rounded-xl border border-[#00C8F0]/60 px-5 py-3 text-sm font-bold text-[#00C8F0] transition-colors hover:bg-[#00C8F0] hover:text-[#061827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0]">
+                    Jelajahi Program Pelatihan
+                    <span class="ml-2" aria-hidden="true">→</span>
+                </a>
             </div>
-        </div>
-    </section>
-@endforeach
 
-<!-- KEUNGGULAN SECTION -->
-    <section id="keunggulan" class="py-16 sm:py-24 bg-neutral-50 border-t border-neutral-200" aria-labelledby="keunggulan-heading">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-14">
-                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-burnt-brick bg-white px-3 py-1 rounded-full border border-burnt-brick/20 shadow-xs">
-                    Mengapa Memilih Kami
+        </div>
+    </div>
+</section>
+
+{{-- D. DIREKTORI WILAYAH --}}
+<section id="wilayah"
+         class="border-b border-slate-200 bg-white py-12 sm:py-14"
+         aria-labelledby="wilayah-heading">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+
+            <div class="max-w-2xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#0F7FA8]">
+                    Wilayah
                 </span>
-                <h2 id="keunggulan-heading" class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-extrabold text-industry-black tracking-tight">
-                    Keunggulan Zonyberg
+
+                <h2 id="wilayah-heading"
+                    class="mt-2 text-xl font-extrabold tracking-tight text-[#101820] sm:text-2xl">
+                    Layanan K3 Listrik di {{ count($provinces) }} Provinsi
                 </h2>
-                <p class="mt-4 text-base text-dark-mahogany">
-                    Informasi skema yang disajikan apa adanya, dengan halaman wilayah untuk konteks layanan dan konsultasi yang transparan.
+
+                <p class="mt-2 text-sm leading-relaxed text-[#475467] sm:text-base">
+                    Jelajahi halaman wilayah provinsi dan kota/kabupaten sebagai informasi cakupan layanan.
                 </p>
             </div>
 
-            <div class="mb-8 hidden md:block">
-                <img src="https://images.unsplash.com/photo-1786209273552-3b57dec47c94?auto=format&fit=crop&w=900&q=80" alt="Pembinaan dan pelatihan kompetensi pertambangan dan energi" width="900" height="600" loading="lazy" decoding="async" class="w-full h-auto max-h-[280px] md:max-h-[350px] object-cover object-center rounded-2xl shadow-md" />
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Pillar 1 -->
-                <div class="p-6 rounded-xl bg-white border border-neutral-200 shadow-sm hover:shadow-md transition">
-                    <div class="w-12 h-12 rounded-lg bg-burnt-brick/10 text-burnt-brick flex items-center justify-center mb-5">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-base font-bold text-industry-black mb-2">Fokus Sektor pertambangan dan energi</h3>
-                    <p class="text-sm text-dark-mahogany leading-relaxed">
-                        Seluruh skema berada dalam lingkup Pertambangan &amp; Energi; unit kompetensi setiap skema tersedia lengkap pada halaman program masing-masing.
-                    </p>
-                </div>
-
-                <!-- Pillar 2 -->
-                <div class="p-6 rounded-xl bg-white border border-neutral-200 shadow-sm hover:shadow-md transition">
-                    <div class="w-12 h-12 rounded-lg bg-burnt-brick/10 text-burnt-brick flex items-center justify-center mb-5">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                    </div>
-                    <h3 class="text-base font-bold text-industry-black mb-2">Mengikuti Struktur Skema</h3>
-                    <p class="text-sm text-dark-mahogany leading-relaxed">
-                        Katalog tersusun sesuai skema kompetensi beserta jenjang dan unit yang tercantum, tanpa pengurangan atau perubahan nama dari daftar penyelenggara.
-                    </p>
-                </div>
-
-                <!-- Pillar 3 -->
-                <div class="p-6 rounded-xl bg-white border border-neutral-200 shadow-sm hover:shadow-md transition">
-                    <div class="w-12 h-12 rounded-lg bg-burnt-brick/10 text-burnt-brick flex items-center justify-center mb-5">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-base font-bold text-industry-black mb-2">Jangkauan Wilayah</h3>
-                    <p class="text-sm text-dark-mahogany leading-relaxed">
-                        Halaman provinsi, kota/kabupaten, dan kecamatan tersedia sebagai konteks administratif jangkauan layanan di seluruh Indonesia.
-                    </p>
-                </div>
-
-                <!-- Pillar 4 -->
-                <div class="p-6 rounded-xl bg-white border border-neutral-200 shadow-sm hover:shadow-md transition">
-                    <div class="w-12 h-12 rounded-lg bg-burnt-brick/10 text-burnt-brick flex items-center justify-center mb-5">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-base font-bold text-industry-black mb-2">Konsultasi Responsif</h3>
-                    <p class="text-sm text-dark-mahogany leading-relaxed">
-                        Informasi jadwal, persyaratan peserta, atau skema penyelenggaraan dikonfirmasi transparan melalui WhatsApp tanpa biaya tersembunyi di halaman web.
-                    </p>
-                </div>
-            </div>
         </div>
-    </section>
 
-    <!-- FAQ SECTION -->
-    <section id="faq" class="py-16 sm:py-24 bg-white border-t border-neutral-200" aria-labelledby="faq-heading">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-burnt-brick bg-neutral-100 px-3 py-1 rounded-full border border-burnt-brick/20 shadow-xs">
-                    Tanya Jawab
+        <div id="wilayah-grid"
+             data-show-group
+             class="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 xl:grid-cols-6">
+
+            @foreach ($provinces as $prov)
+                <a href="{{ route('regional.province', $prov['slug']) }}"
+                   class="rounded-xl border border-slate-200 bg-[#F4F7FA] px-3 py-3 transition-colors hover:border-[#00C8F0] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] {{ $loop->index >= 6 ? 'scheme-extra' : '' }}"
+                   @if ($loop->index >= 6) hidden @endif>
+
+                    <span class="block truncate text-xs font-semibold text-[#101820] sm:text-sm">
+                        {{ $prov['name'] }}
+                    </span>
+                </a>
+            @endforeach
+
+        </div>
+
+        @if (count($provinces) > 6)
+            <button type="button"
+                    class="js-show-all mt-5 inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border-2 border-[#00C8F0] px-5 py-3 text-sm font-bold text-[#0F7FA8] transition-colors hover:bg-[#00C8F0] hover:text-[#061827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] focus-visible:ring-offset-2 sm:w-auto"
+                    data-all-label="Lihat Semua {{ count($provinces) }} Provinsi"
+                    data-less-label="Sembunyikan"
+                    aria-expanded="false"
+                    aria-controls="wilayah-grid">
+                Lihat Semua {{ count($provinces) }} Provinsi
+            </button>
+        @endif
+
+    </div>
+</section>
+
+{{-- E. ARTIKEL TERBARU --}}
+<section id="artikel"
+         class="bg-[#F4F7FA] py-12 sm:py-16 lg:py-20"
+         aria-labelledby="artikel-heading">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+
+            <div class="max-w-2xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#0F7FA8] sm:text-sm">
+                    Artikel Terbaru
                 </span>
-                <h2 id="faq-heading" class="mt-3 text-2xl sm:text-3xl font-extrabold text-industry-black tracking-tight">
-                    Pertanyaan yang Sering Diajukan
+
+                <h2 id="artikel-heading"
+                    class="mt-2 text-2xl font-extrabold tracking-tight text-[#101820] sm:text-3xl lg:text-4xl">
+                    Informasi &amp; Tips
+                    <span class="text-[#0F9BC4]">K3 Listrik</span>
                 </h2>
-                <p class="mt-3 text-sm sm:text-base text-dark-mahogany">
-                    Seputar skema kompetensi dan program pelatihan pertambangan dan energi.
+
+                <p class="mt-4 text-sm leading-relaxed text-[#475467] sm:text-base">
+                    Artikel mengenai keselamatan kerja listrik, teknologi kelistrikan, dan panduan praktis
+                    untuk meningkatkan pemahaman keselamatan kerja.
                 </p>
             </div>
 
-            <div class="space-y-4">
-                <details class="group bg-neutral-50 rounded-lg border border-neutral-200 p-5 open:ring-2 open:ring-burnt-brick transition-all shadow-xs">
-                    <summary class="font-bold text-industry-black cursor-pointer list-none flex items-center justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burnt-brick rounded">
-                        <span>Apakah pelatihan ini membuat peserta memperoleh sertifikat atau lisensi resmi?</span>
-                        <svg class="w-5 h-5 text-burnt-brick group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </summary>
-                    <p class="mt-3 text-sm text-dark-mahogany leading-relaxed">
-                        Program-program ini dirancang sebagai pembinaan kompetensi. Status sertifikasi resmi, penunjukan jabatan, atau lisensi khusus diatur oleh instansi berwenang dan perusahaan masing-masing melalui proses tersendiri. Verifikasi selalu dilakukan kepada pihak yang berwenang.
-                    </p>
-                </details>
+            <a href="{{ route('articles.index') }}"
+               class="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border-2 border-[#00C8F0] px-6 py-3 text-sm font-bold text-[#0F7FA8] transition-colors hover:bg-[#00C8F0] hover:text-[#061827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] focus-visible:ring-offset-2 sm:w-auto">
+                Lihat Semua Artikel
+                <span class="ml-2" aria-hidden="true">→</span>
+            </a>
 
-                <details class="group bg-neutral-50 rounded-lg border border-neutral-200 p-5 open:ring-2 open:ring-burnt-brick transition-all shadow-xs">
-                    <summary class="font-bold text-industry-black cursor-pointer list-none flex items-center justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burnt-brick rounded">
-                        <span>Program mana yang cocok untuk tim kami?</span>
-                        <svg class="w-5 h-5 text-burnt-brick group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </summary>
-                    <p class="mt-3 text-sm text-dark-mahogany leading-relaxed">
-                        Pilih berdasarkan lingkup kerja yang dibutuhkan; setiap skema memiliki halaman sendiri dengan daftar unit kompetensi, dan konsultasi pengarahan tersedia via WhatsApp.
-                    </p>
-                </details>
-
-                <details class="group bg-neutral-50 rounded-lg border border-neutral-200 p-5 open:ring-2 open:ring-burnt-brick transition-all shadow-xs">
-                    <summary class="font-bold text-industry-black cursor-pointer list-none flex items-center justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burnt-brick rounded">
-                        <span>Apakah tersedia skema in-house training di lokasi perusahaan?</span>
-                        <svg class="w-5 h-5 text-burnt-brick group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </summary>
-                    <p class="mt-3 text-sm text-dark-mahogany leading-relaxed">
-                        Kebutuhan penyelenggaraan dan ketersediaan skema in-house dikonfirmasi langsung bersama penyelenggara program, termasuk jadwal dan persyaratan fasilitas lokasi.
-                    </p>
-                </details>
-
-                <details class="group bg-neutral-50 rounded-lg border border-neutral-200 p-5 open:ring-2 open:ring-burnt-brick transition-all shadow-xs">
-                    <summary class="font-bold text-industry-black cursor-pointer list-none flex items-center justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burnt-brick rounded">
-                        <span>Bagaimana cara mendapatkan informasi jadwal dan biaya program?</span>
-                        <svg class="w-5 h-5 text-burnt-brick group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </summary>
-                    <p class="mt-3 text-sm text-dark-mahogany leading-relaxed">
-                        Jadwal dan investasi biaya tidak dipublikasikan di halaman web. Hubungi kami melalui WhatsApp akan membantu mengonfirmasi ketersediaan program, jadwal, beserta penawaran resmi sesuai kebutuhan.
-                    </p>
-                </details>
-            </div>
         </div>
-    </section>
 
-    <!-- FINAL CTA BANNER (DARK SURFACE) -->
-    <section id="kontak" class="bg-dark-mahogany text-white py-16 sm:py-20 border-t border-industry-black relative overflow-hidden" aria-labelledby="cta-heading">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <span class="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider text-safety-orange bg-industry-black rounded-full border border-dark-mahogany mb-4">
-                Konsultasi &amp; Pendaftaran Program
-            </span>
-            <div class="mb-8 hidden md:block">
-                <img src="https://images.unsplash.com/photo-1781546441748-cdbefd22a586?auto=format&fit=crop&w=900&q=80" alt="Konsultasi pengembangan kompetensi pertambangan dan energi" width="900" height="600" loading="lazy" decoding="async" class="mx-auto w-full max-w-2xl h-auto max-h-[320px] md:max-h-[400px] rounded-2xl shadow-xl object-cover object-center" />
-            </div>
-            <h2 id="cta-heading" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight uppercase">
-                Bangun Kompetensi pertambangan dan energi Tim Anda
-            </h2>
-            <p class="mt-4 text-base sm:text-lg text-neutral-200 max-w-2xl mx-auto leading-relaxed">
-                Hubungi kami via WhatsApp untuk konsultasi skema kompetensi, program pelatihan pertambangan dan energi, atau rekomendasi skema sesuai kebutuhan organisasi Anda.
-            </p>
-            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <x-wa-cta variant="primary" size="lg" label="Konsultasi via WhatsApp Sekarang" class="shadow-lg bg-safety-orange hover:bg-burnt-brick text-industry-black hover:text-white font-bold" />
-            </div>
-        </div>
-    </section>
+        <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-10 lg:grid-cols-3 lg:gap-6">
 
-    <!-- REGION DIRECTORY SECTION -->
-    <section id="wilayah" class="py-14 bg-neutral-50 border-t border-neutral-200" aria-label="Jelajahi Wilayah">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-8">
-                <span class="text-xs font-bold uppercase tracking-wider text-burnt-brick bg-white px-3 py-1 rounded-full border border-burnt-brick/20">
-                    Jangkauan Wilayah
-                </span>
-                <h2 class="text-2xl font-extrabold text-industry-black mt-2">Skema Kompetensi pertambangan dan energi di {{ count($provinces) }} Provinsi</h2>
-                <p class="text-sm text-dark-mahogany mt-1">Jelajahi halaman provinsi dan kota untuk konteks layanan di wilayah Anda.</p>
-            </div>
+            @forelse ($latestArticles as $article)
+                <article class="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg">
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                @foreach($provinces as $prov)
-                    <a href="{{ route('regional.province', $prov['slug']) }}" class="block p-4 bg-white rounded-lg border border-neutral-200 hover:border-burnt-brick hover:shadow-sm transition group">
-                        <div class="flex items-center justify-between">
-                            <span class="font-bold text-sm text-industry-black group-hover:text-burnt-brick transition-colors">{{ $prov['name'] }}</span>
-                            @if(!empty($prov['total_cities']))
-                                <span class="text-[11px] text-dark-mahogany bg-neutral-100 px-2 py-0.5 rounded border border-neutral-200">{{ $prov['total_cities'] }} Kab/Kota</span>
+                    <a href="{{ route('articles.show', $article->slug) }}"
+                       class="block overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0]"
+                       aria-label="{{ $article->title }}">
+
+                        <div class="aspect-[16/10] overflow-hidden bg-slate-200">
+
+                            @if ($article->featured_image)
+                                <img src="{{ asset('storage/' . $article->featured_image) }}"
+                                     alt="Ilustrasi artikel: {{ $article->title }}"
+                                     loading="lazy"
+                                     decoding="async"
+                                     onerror="this.onerror=null;this.src='/images/home/hero-electrician-panel.jpg';"
+                                     class="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]" />
+                            @else
+                                <img src="/images/home/panel-k3-switchgear.jpg"
+                                     alt="Panel listrik industri bertanda tegangan berbahaya"
+                                     loading="lazy"
+                                     decoding="async"
+                                     onerror="this.onerror=null;this.src='/images/home/hero-electrician-panel.jpg';"
+                                     class="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]" />
                             @endif
+
                         </div>
                     </a>
-                @endforeach
-            </div>
+
+                    <div class="flex flex-1 flex-col p-5">
+
+                        <span class="self-start rounded-full bg-[#00C8F0]/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#0F7FA8]">
+                            K3 Listrik
+                        </span>
+
+                        <h3 class="mt-3 text-base font-bold leading-snug text-[#101820] sm:text-lg">
+                            <a href="{{ route('articles.show', $article->slug) }}"
+                               class="transition-colors hover:text-[#0F9BC4] focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0]">
+                                {{ \Illuminate\Support\Str::limit($article->title, 68) }}
+                            </a>
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-relaxed text-[#475467]">
+                            {{ \Illuminate\Support\Str::limit(strip_tags($article->excerpt ?: $article->content), 120) }}
+                        </p>
+
+                        <div class="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4">
+
+                            @if ($article->published_at)
+                                <time datetime="{{ $article->published_at->toDateString() }}"
+                                      class="text-xs text-slate-500">
+                                    {{ $article->published_at->translatedFormat('d F Y') }}
+                                </time>
+                            @else
+                                <span></span>
+                            @endif
+
+                            <a href="{{ route('articles.show', $article->slug) }}"
+                               class="inline-flex shrink-0 items-center text-sm font-bold text-[#0F7FA8] hover:text-[#061827]">
+                                Baca Artikel
+                                <span class="ml-1" aria-hidden="true">→</span>
+                            </a>
+
+                        </div>
+                    </div>
+                </article>
+
+            @empty
+                <div class="rounded-2xl border border-slate-200 bg-white p-6 sm:col-span-2 lg:col-span-3">
+                    <p class="text-sm leading-relaxed text-[#475467]">
+                        Belum ada artikel terpublikasi. Artikel mengenai K3 Listrik akan ditampilkan
+                        di bagian ini setelah tersedia.
+                    </p>
+                </div>
+            @endforelse
+
         </div>
-    </section>
+    </div>
+</section>
+
+{{-- F. BANNER KONSULTASI --}}
+<section id="kontak"
+         class="relative overflow-hidden bg-[#061827] text-white"
+         aria-labelledby="kontak-heading">
+
+    <img src="/images/home/banner-transmisi.jpg"
+         alt="Menara transmisi listrik tegangan tinggi"
+         width="1920"
+         height="1280"
+         loading="lazy"
+         decoding="async"
+         onerror="this.onerror=null;this.removeAttribute('src');"
+         class="absolute inset-0 h-full w-full object-cover object-center opacity-35" />
+
+    <div class="absolute inset-0 bg-gradient-to-b from-[#061827]/90 via-[#061827]/75 to-[#061827]/95"
+         aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-4xl px-4 py-14 text-center sm:px-6 sm:py-20 lg:px-8">
+
+        <span class="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#00C8F0]/30 bg-white/5 text-[#FFB020]">
+
+            <svg class="h-7 w-7"
+                 viewBox="0 0 24 24"
+                 fill="currentColor"
+                 aria-hidden="true">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+
+        </span>
+
+        <h2 id="kontak-heading"
+            class="mt-5 text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
+            Siap Meningkatkan Kompetensi
+            <span class="text-[#00C8F0]">K3 Listrik</span> Anda?
+        </h2>
+
+        <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base lg:text-lg">
+            Konsultasikan kebutuhan pelatihan K3 Listrik untuk tim Anda. Pilih layanan yang sesuai,
+            tanyakan informasi program, dan diskusikan kebutuhan pelatihan melalui WhatsApp.
+        </p>
+
+        <div class="mt-7 flex justify-center sm:mt-8">
+            <x-wa-cta
+                variant="primary"
+                size="lg"
+                label="Konsultasi via WhatsApp"
+                class="w-full bg-[#FFB020] font-bold text-[#061827] shadow-lg hover:bg-[#E09A00] hover:text-[#061827] sm:w-auto"
+            />
+        </div>
+
+    </div>
+</section>
 @endsection
