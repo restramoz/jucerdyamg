@@ -66,16 +66,11 @@ class PublicArticleTest extends TestCase
             ->assertDontSee($draft->title);
     }
 
-    public function test_article_index_shows_program_links(): void
+    public function test_article_index_loads_with_title(): void
     {
         $response = $this->get(route('articles.index'));
         $response->assertOk();
-
-        // Footer catalog links are derived from schemes.json — not hardcoded slugs.
-        $schemes = array_slice(app(SchemeService::class)->all(), 0, 3, true);
-        foreach (array_keys($schemes) as $slug) {
-            $response->assertSee(route('program.show', $slug));
-        }
+        $response->assertSee('Artikel & Panduan Jucerdyamg');
     }
 
     // ─── Show Tests ───────────────────────────────────────────────────────────

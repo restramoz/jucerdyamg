@@ -18,11 +18,11 @@
   @endif
   "author": {
     "@type": "Organization",
-    "name": "Tim dhanlielektrizitetdenky"
+    "name": "Tim Jucerdyamg"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "{{ config('app.name', 'dhanlielektrizitetdenky') }}",
+    "name": "{{ config('app.name', 'Jucerdyamg') }}",
     "url": "{{ url('/') }}"
   }
 }
@@ -101,7 +101,7 @@
                     Diterbitkan: <strong class="text-dark-mahogany">{{ ($article->published_at ?? $article->created_at)->format('d F Y') }}</strong>
                 </time>
                 <span aria-hidden="true">&bull;</span>
-                <span>Oleh: <strong class="text-dark-mahogany">Tim dhanlielektrizitetdenky</strong></span>
+                <span>Oleh: <strong class="text-dark-mahogany">Tim Jucerdyamg</strong></span>
             </div>
 
             @if($article->excerpt)
@@ -217,10 +217,10 @@
         {{-- Consultation CTA --}}
         <div class="mt-12 p-6 sm:p-8 rounded-2xl bg-industry-black text-white space-y-4 shadow-lg border border-dark-mahogany">
             <span class="inline-block px-3 py-1 rounded-full bg-dark-mahogany text-safety-orange text-[11px] font-bold uppercase tracking-wider border border-burnt-brick/40">
-                Skema Kompetensi K3 Listrik
+                Skema Kompetensi Jucerdyamg
             </span>
             <h3 class="font-extrabold text-xl sm:text-2xl text-white">
-                Konsultasikan Kebutuhan Program K3 Listrik Anda
+                Konsultasikan Kebutuhan Program Jucerdyamg Anda
             </h3>
             <p class="text-sm text-neutral-200 leading-relaxed max-w-2xl">
                 Dapatkan informasi mengenai skema kompetensi, unit pelatihan, dan saran program yang sesuai melalui WhatsApp.

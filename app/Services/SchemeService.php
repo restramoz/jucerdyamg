@@ -17,7 +17,7 @@ class SchemeService
      * Authoritative source files, in a fixed display order.
      */
     protected const SOURCE_FILES = [
-        'k3listrik' => 'k3listrik.json',
+        'layanan' => 'layanan.json',
     ];
 
     protected const SOURCE_IMAGES = [
@@ -237,6 +237,11 @@ class SchemeService
 
             [$sourceMeta, $adapted] = $this->adaptSource($key, $file, $decoded);
 
+            $adapted = array_values(array_filter(
+                $adapted,
+                static fn (array $scheme): bool => !self::isExcludedService((string) ($scheme['name'] ?? ''))
+            ));
+
             // Merge adapted schemes, preserving deterministic slug collisions
             // across the unified catalog (-2, -3, ...).
             foreach ($adapted as $scheme) {
@@ -298,6 +303,11 @@ class SchemeService
         $sourceFile = basename($path);
         [$sourceMeta, $adapted] = $this->adaptSource($sourceKey, $sourceFile, $decoded);
 
+        $adapted = array_values(array_filter(
+            $adapted,
+            static fn (array $scheme): bool => !self::isExcludedService((string) ($scheme['name'] ?? ''))
+        ));
+
         $programs = [];
         foreach ($adapted as $scheme) {
             $name = trim((string) ($scheme['name'] ?? ''));
@@ -329,11 +339,58 @@ class SchemeService
      */
     protected function adaptSource(string $sourceKey, string $sourceFile, array $decoded): array
     {
-        // Support the k3listrik.json catalog, which is a top-level list of service names.
+        // Support layanan.json, a top-level list of category objects.
+        if (array_is_list($decoded) && isset($decoded[0]) && is_array($decoded[0]) && isset($decoded[0]['layanan'])) {
+            $schemes = [];
+            foreach ($decoded as $categoryIndex => $category) {
+                if (!is_array($category)) {
+                    throw new \RuntimeException('Scheme source ' . $sourceFile . ' contains a non-object category at index ' . $categoryIndex . '.');
+                }
+
+                $categoryName = trim((string) ($category['kategori'] ?? ''));
+                if ($categoryName === '') {
+                    throw new \RuntimeException('Scheme source ' . $sourceFile . ' contains a category without "kategori" at index ' . $categoryIndex . '.');
+                }
+
+                if (!isset($category['layanan']) || !is_array($category['layanan'])) {
+                    throw new \RuntimeException('Scheme source ' . $sourceFile . ' is missing the "layanan" list for category ' . $categoryName . '.');
+                }
+
+                foreach (array_values($category['layanan']) as $serviceIndex => $serviceName) {
+                    if (!is_string($serviceName)) {
+                        throw new \RuntimeException('Scheme source ' . $sourceFile . ' contains a non-string service at category ' . $categoryName . ', index ' . $serviceIndex . '.');
+                    }
+
+                    $name = trim($serviceName);
+                    if ($name === '') {
+                        throw new \RuntimeException('Scheme source ' . $sourceFile . ' contains an empty service name in category ' . $categoryName . '.');
+                    }
+
+                    // Excluded services are removed in the catalog loading path.
+                    if (self::isExcludedService($name)) {
+                        continue;
+                    }
+
+                    $schemes[] = [
+                        'name' => $name,
+                        'lsp' => null,
+                        'units' => [],
+                        'category' => $categoryName,
+                    ];
+                }
+            }
+
+            $decoded = [
+                'title' => 'Layanan',
+                'schemes' => $schemes,
+            ];
+        }
+
+        // Backward-compatible support for a flat top-level list of service names.
         if (array_is_list($decoded) && isset($decoded[0]) && is_string($decoded[0])) {
             $serviceNames = array_values(array_filter(array_map('trim', $decoded), static fn (string $v): bool => $v !== ''));
             $decoded = [
-                'title' => 'K3 Listrik',
+                'title' => 'Layanan',
                 'schemes' => array_map(
                     static fn (string $name): array => ['name' => $name, 'lsp' => null, 'units' => []],
                     $serviceNames
@@ -345,13 +402,19 @@ class SchemeService
             throw new \RuntimeException('Scheme source ' . $sourceFile . ' does not contain the expected "schemes" structure.');
         }
 
-        $sourceTitle = trim((string) ($decoded['title'] ?? 'K3 Listrik'));
+        $sourceTitle = trim((string) ($decoded['title'] ?? 'Layanan'));
 
         $adapted = [];
         foreach (array_values($decoded['schemes']) as $index => $scheme) {
             if (!is_array($scheme)) {
                 throw new \RuntimeException('Scheme source ' . $sourceFile . ' contains a non-object scheme at index ' . $index . '.');
             }
+
+            $categoryName = trim((string) ($scheme['category'] ?? $scheme['source_title'] ?? ''));
+            if ($categoryName === '') {
+                $categoryName = $sourceTitle !== '' ? $sourceTitle : 'Layanan';
+            }
+            $schemeSourceTitle = trim((string) ($scheme['source_title'] ?? $categoryName));
 
             $adapted[] = [
                 'name' => $scheme['name'] ?? null,
@@ -360,12 +423,20 @@ class SchemeService
                 // Source attribution is mandatory for unified records.
                 'source' => $sourceKey,
                 'source_key' => $sourceKey,
-                'source_title' => $sourceTitle,
+                'category' => $categoryName,
+                'category_label' => $categoryName,
+                'source_title' => $schemeSourceTitle,
                 'source_file' => $sourceFile,
                 'source_index' => $index,
                 '_slug' => Str::slug((string) ($scheme['name'] ?? '')),
             ];
         }
+
+        // Never expose excluded services through catalog metadata either.
+        $adapted = array_values(array_filter(
+            $adapted,
+            static fn (array $s): bool => !self::isExcludedService((string) ($s['name'] ?? ''))
+        ));
 
         $unitCount = array_sum(array_map(
             static fn (array $s): int => count($s['units']),
@@ -384,7 +455,7 @@ class SchemeService
             'scheme_count' => count($adapted),
             'unit_count' => $unitCount,
             'image_url' => self::SOURCE_IMAGES[$sourceKey] ?? '/images/home/sumber-teknisi.jpg',
-            'image_alt' => self::SOURCE_IMAGE_ALTS[$sourceKey] ?? 'Pelatihan K3 Listrik dan kelistrikan industri',
+            'image_alt' => self::SOURCE_IMAGE_ALTS[$sourceKey] ?? ('Layanan ' . $categoryName),
         ];
 
         return [$meta, $adapted];
@@ -478,6 +549,7 @@ class SchemeService
         $sourceKey = (string) ($scheme['source'] ?? $sourceMeta['key'] ?? '');
         $sourceTitle = (string) ($scheme['source_title'] ?? $sourceMeta['title'] ?? '');
         $sourceFile = (string) ($scheme['source_file'] ?? $sourceMeta['file'] ?? '');
+        $categoryName = (string) ($scheme['category'] ?? ($sourceTitle !== '' ? $sourceTitle : 'Layanan'));
         $stableId = $sourceKey . ':' . $slug;
 
         return [
@@ -491,22 +563,22 @@ class SchemeService
             'source_index' => $scheme['source_index'] ?? null,
             'slug' => $slug,
             'image_url' => self::SOURCE_IMAGES[$sourceKey] ?? '/images/home/sumber-teknisi.jpg',
-            'image_alt' => self::SOURCE_IMAGE_ALTS[$sourceKey] ?? 'Pelatihan K3 Listrik dan kelistrikan industri',
+            'image_alt' => self::SOURCE_IMAGE_ALTS[$sourceKey] ?? ('Layanan ' . $categoryName),
             'category' => 'training-service',
-            'category_label' => 'Layanan Pelatihan K3 Listrik',
-            'sector' => 'k3-listrik',
-            'level' => $lsp ?? 'Layanan K3 Listrik',
+            'category_label' => $categoryName,
+            'sector' => Str::slug($categoryName),
+            'level' => $lsp ?? ('Layanan ' . $categoryName),
             'title' => $name,
-            'badge' => $lsp ?? 'Layanan K3 Listrik',
-            'meta_title' => $name . ' | K3 Listrik',
-            'meta_description' => 'Layanan pelatihan K3 Listrik ' . $name . '. Rincian program dikonfirmasi melalui konsultasi.',
-            'hero_heading' => 'Pelatihan K3 Listrik',
+            'badge' => $lsp ?? ('Layanan ' . $categoryName),
+            'meta_title' => $name . ' | Jucerdyamg',
+            'meta_description' => 'Layanan ' . $categoryName . ' ' . $name . '. Rincian program dikonfirmasi melalui konsultasi.',
+            'hero_heading' => $categoryName,
             'hero_highlight' => $name,
-            'hero_subheading' => 'Informasi layanan pelatihan K3 Listrik ' . $name . '; rincian penyelenggaraan dikonfirmasi melalui konsultasi.',
+            'hero_subheading' => 'Informasi layanan ' . $categoryName . ' ' . $name . '; rincian penyelenggaraan dikonfirmasi melalui konsultasi.',
             'wa_message' => 'Halo, saya ingin konsultasi mengenai ' . $name . '.',
-            'introduction' => 'Layanan ' . $name . ' merupakan bagian dari program pelatihan K3 Listrik. Rincian kurikulum dan persyaratan penyelenggaraan dikonfirmasi melalui konsultasi.',
+            'introduction' => 'Layanan ' . $name . ' merupakan bagian dari ' . $categoryName . '. Rincian kurikulum dan persyaratan penyelenggaraan dikonfirmasi melalui konsultasi.',
             'target_audience' => [
-                'Tenaga kerja, pengawas, teknisi, operator, dan profesional yang bekerja pada instalasi kelistrikan dan sistem tenaga listrik; kecocokan latar belakang dikonfirmasi melalui konsultasi.',
+                'Pihak yang membutuhkan layanan ' . $categoryName . '; kecocokan latar belakang dikonfirmasi melalui konsultasi.',
             ],
             'roles_and_responsibilities' => [
                 [
@@ -537,6 +609,199 @@ class SchemeService
             ],
             'lsp' => $lsp,
             'units' => $units,
+        ];
+    }
+
+    /**
+     * Determine whether a catalog service name is excluded from selection/generation.
+     */
+    public static function isExcludedService(string $name): bool
+    {
+        $value = mb_strtolower(trim($name));
+        if ($value === '') {
+            return false;
+        }
+
+        $needles = [
+            'juru ledak',
+            'juru dinamit',
+            'explosive',
+            'explosives',
+            'bahan peledak',
+            'peledak',
+            'dinamit',
+            'ledak',
+            'vaccine',
+            'vaksin',
+            'vaccination',
+            'imunisasi',
+            'bulk virus',
+            'obat',
+            'medicine',
+            'medicin',
+            'drug',
+            'farmasi',
+            'pharma',
+            'pharmaceutical',
+            'apotek',
+            'penyakit',
+            'disease',
+            'illness',
+            'sakit',
+            'campak',
+            'rubella',
+            'polio',
+            'influenza',
+            'hepatitis',
+            'covid',
+            'kanker',
+            'malaria',
+            'tbc',
+            'tuberkul',
+            'diabetes',
+            'asma',
+            'tumor',
+            'rabies',
+            'demam',
+            'infeksi',
+            'virus',
+        ];
+
+        foreach ($needles as $needle) {
+            if (str_contains($value, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function isExcluded(string $name): bool
+    {
+        return self::isExcludedService($name);
+    }
+
+    /**
+     * Complete representative metadata for all 21 service categories.
+     *
+     * @return array{image: string, alt: string, description: string}
+     */
+    public static function categoryMetadata(string $categoryName): array
+    {
+        $slug = Str::slug($categoryName);
+
+        $metadata = [
+            'alat-berat-crane-rigging' => [
+                'image' => '/images/categories/alat-berat-crane-rigging.jpg',
+                'alt' => 'Operator alat berat dan mobile crane dalam kegiatan rigging industri',
+                'description' => 'Pelatihan dan sertifikasi keahlian operator alat berat, rigger, mobile crane, dan operasional logistik alat industri.',
+            ],
+            'bisnis-manajemen-administrasi' => [
+                'image' => '/images/categories/bisnis-manajemen-administrasi.jpg',
+                'alt' => 'Pertemuan manajemen bisnis dan profesional di ruang kantor modern',
+                'description' => 'Pengembangan kompetensi tata kelola bisnis, administrasi perkantoran, manajemen SDM, dan kepemimpinan korporasi.',
+            ],
+            'desain-kreatif-komunikasi' => [
+                'image' => '/images/categories/desain-kreatif-komunikasi.jpg',
+                'alt' => 'Desainer grafis profesional bekerja di studio kreatif modern',
+                'description' => 'Standar keahlian desain komunikasi visual, multimedia terapan, periklanan, dan kreasi konten profesional.',
+            ],
+            'energi-kimia-proses' => [
+                'image' => '/images/categories/energi-kimia-proses.jpg',
+                'alt' => 'Fasilitas kilang industri pemrosesan kimia dan energi terbarukan',
+                'description' => 'Kompetensi teknologi proses kimia, pengolahan energi fosil dan terbarukan, serta keandalan operasi pabrik.',
+            ],
+            'keamanan-pengamanan-tanggap-darurat' => [
+                'image' => '/images/categories/keamanan-pengamanan-tanggap-darurat.jpg',
+                'alt' => 'Personel pengamanan industri dan tanggap darurat keselamatan kerja',
+                'description' => 'Kualifikasi satuan pengamanan, mitigasi bahaya industri, kesiapsiagaan darurat, dan proteksi aset fisik.',
+            ],
+            'kecantikan-spa-kebugaran' => [
+                'image' => '/images/categories/kecantikan-spa-kebugaran.jpg',
+                'alt' => 'Perawatan relaksasi spa dan kesehatan kebugaran profesional',
+                'description' => 'Keahlian terapis estetika, perawatan spa aromaterapi, tata rias profesional, dan layanan kebugaran tubuh.',
+            ],
+            'keselamatan-kerja-k3' => [
+                'image' => '/images/categories/keselamatan-kerja-k3.jpg',
+                'alt' => 'Inspektur K3 dengan rompi keselamatan dan helm memeriksa area kerja',
+                'description' => 'Sertifikasi Ahli K3 umum, analisis risiko tempat kerja, inspeksi kepatuhan regulasi, dan pencegahan kecelakaan.',
+            ],
+            'keuangan-perbankan-asuransi' => [
+                'image' => '/images/categories/keuangan-perbankan-asuransi.jpg',
+                'alt' => 'Analisis data finansial, perbankan investasi dan perencanaan risiko',
+                'description' => 'Kompetensi akuntansi industri, analisis kredit perbankan, underwriting asuransi, dan manajemen kepatuhan keuangan.',
+            ],
+            'konstruksi-bangunan' => [
+                'image' => '/images/categories/konstruksi-bangunan.jpg',
+                'alt' => 'Proyek konstruksi bangunan bertingkat dan rekayasa teknik sipil',
+                'description' => 'Kualifikasi pengawasan struktur bangunan, rekayasa sipil, manajemen proyek lapangan, dan keselamatan konstruksi.',
+            ],
+            'layanan-sosial-umum' => [
+                'image' => '/images/categories/layanan-sosial-umum.jpg',
+                'alt' => 'Pemberdayaan tenaga sosial dan pendampingan masyarakat publik',
+                'description' => 'Peningkatan mutu fasilitator sosial, konseling pemberdayaan masyarakat, dan tata kelola layanan umum.',
+            ],
+            'lingkungan-limbah-pengolahan-air' => [
+                'image' => '/images/categories/lingkungan-limbah-pengolahan-air.jpg',
+                'alt' => 'Fasilitas pengolahan air bersih dan instalasi pengelolaan limbah ramah lingkungan',
+                'description' => 'Pengelolaan limbah B3, pengendalian pencemaran air dan udara, audit AMDAL, dan keandalan sistem IPAL.',
+            ],
+            'listrik-elektronika-instrumentasi' => [
+                'image' => '/images/categories/listrik-elektronika-instrumentasi.jpg',
+                'alt' => 'Instalasi panel distribusi listrik, kontrol sakelar dan instrumentasi modern',
+                'description' => 'Keahlian teknisi instalasi tenaga listrik, kalibrasi sistem kontrol, pemeliharaan panel, dan otomatisasi sirkuit.',
+            ],
+            'manufaktur-fabrikasi-metalurgi' => [
+                'image' => '/images/categories/manufaktur-fabrikasi-metalurgi.jpg',
+                'alt' => 'Pekerja pabrik manufaktur melakukan pengelasan baja dan fabrikasi logam',
+                'description' => 'Kompetensi teknik pengelasan spesialis, pemesinan presisi (CNC), fabrikasi baja, dan pengujian material metalurgi.',
+            ],
+            'pariwisata-perhotelan-kuliner' => [
+                'image' => '/images/categories/pariwisata-perhotelan-kuliner.jpg',
+                'alt' => 'Layanan keramahan hotel berbintang dan hidangan kuliner profesional',
+                'description' => 'Standar operasional front office perhotelan, manajemen tata boga (culinary art), dan tata kelola industri wisata.',
+            ],
+            'pendidikan-pelatihan-sertifikasi' => [
+                'image' => '/images/categories/pendidikan-pelatihan-sertifikasi.jpg',
+                'alt' => 'Instruktur menyampaikan materi workshop pelatihan vokasi interaktif',
+                'description' => 'Kualifikasi instruktur pelatihan kerja, metodologi pembelajaran terapan, dan sertifikasi asesor kompetensi nasional.',
+            ],
+            'pertambangan-migas-geologi' => [
+                'image' => '/images/categories/pertambangan-migas-geologi.jpg',
+                'alt' => 'Operasional tambang terbuka, alat angkut tambang dan eksplorasi migas',
+                'description' => 'Standar operasional tambang mineral batubara, keselamatan migas, pemetaan topografi, dan survei geologi eksplorasi.',
+            ],
+            'pertanian-perkebunan-kehutanan' => [
+                'image' => '/images/categories/pertanian-perkebunan-kehutanan.jpg',
+                'alt' => 'Area perkebunan produktif dan agribisnis berkelanjutan',
+                'description' => 'Kompetensi budidaya komoditas perkebunan, mekanisasi pertanian modern, proteksi tanaman, dan kelestarian hutan.',
+            ],
+            'peternakan-perikanan-kelautan' => [
+                'image' => '/images/categories/peternakan-perikanan-kelautan.jpg',
+                'alt' => 'Aktivitas budidaya perikanan laut dan manajemen peternakan komersial',
+                'description' => 'Keahlian teknologi budidaya perikanan tangkap, nautika kapal niaga, pengolahan hasil laut, dan nutrisi peternakan.',
+            ],
+            'teknis-profesi-lainnya' => [
+                'image' => '/images/categories/teknis-profesi-lainnya.jpg',
+                'alt' => 'Teknisi ahli industri melakukan perawatan mekanikal peralatan kerja',
+                'description' => 'Ragam kompetensi mekanik industri, pemeliharaan utilitas bangunan, perbaikan presisi, dan vokasi teknis terapan.',
+            ],
+            'teknologi-informasi-digital' => [
+                'image' => '/images/categories/teknologi-informasi-digital.jpg',
+                'alt' => 'Pusat data server komputer jaringan dan infrastruktur komputasi modern',
+                'description' => 'Keahlian rekayasa perangkat lunak, administrasi jaringan, keamanan siber (cybersecurity), dan arsitektur cloud.',
+            ],
+            'transportasi-logistik-pengemudi' => [
+                'image' => '/images/categories/transportasi-logistik-pengemudi.jpg',
+                'alt' => 'Pusat distribusi logistik pergudangan armada kargo terintegrasi',
+                'description' => 'Standar manajemen pergudangan (warehousing), distribusi rantai pasok barang, pengemudi defensif, dan ekspedisi kargo.',
+            ],
+        ];
+
+        return $metadata[$slug] ?? [
+            'image' => '/images/home/hero-industrial.jpg',
+            'alt' => 'Layanan dan pelatihan profesional industri Jucerdyamg',
+            'description' => 'Katalog layanan dan pelatihan profesional terpadu dari Jucerdyamg untuk mendukung peningkatan kompetensi industri.',
         ];
     }
 }

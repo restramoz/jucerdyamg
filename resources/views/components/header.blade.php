@@ -1,16 +1,16 @@
-<header class="sticky top-0 z-30 bg-[#061827]/95 backdrop-blur-md border-b border-white/10 shadow-md">
+<header class="sticky top-0 z-30 bg-[#111318]/95 backdrop-blur-md border-b border-white/10 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
             <!-- Brand -->
-            <a href="{{ route('home') }}" class="group flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#061827] rounded-lg p-1 min-w-0" aria-label="dhanlielektrizitetdenky - Beranda">
-                <span class="w-10 h-10 shrink-0 rounded-lg bg-[#101820] border border-[#00C8F0]/40 flex items-center justify-center">
-                    <svg class="w-5 h-5 text-[#00C8F0]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <a href="{{ route('home') }}" class="group flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C2A8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#111318] rounded-lg p-1 min-w-0" aria-label="Jucerdyamg - Beranda">
+                <span class="w-10 h-10 shrink-0 rounded-xl bg-[#252932] border border-[#00C2A8]/30 flex items-center justify-center transition-colors group-hover:border-[#00C2A8]">
+                    <svg class="w-5 h-5 text-[#00C2A8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                     </svg>
                 </span>
                 <span class="flex flex-col min-w-0">
-                    <span class="text-sm sm:text-base font-extrabold tracking-tight text-white truncate group-hover:text-[#00C8F0] transition-colors">dhanlielektrizitetdenky</span>
-                    <span class="hidden sm:block text-[11px] text-neutral-400 font-medium truncate">Pelatihan &amp; Konsultasi K3 Listrik</span>
+                    <span class="text-base sm:text-lg font-black tracking-tight text-white truncate group-hover:text-[#00C2A8] transition-colors">Jucerdyamg</span>
+                    <span class="hidden sm:block text-[11px] text-[#A0AAB8] font-medium truncate">Katalog Layanan &amp; Pelatihan Industri</span>
                 </span>
             </a>
 
@@ -26,7 +26,7 @@
                     @php $isHome = $item[0] === 'Beranda' && request()->routeIs('home'); @endphp
                     <a href="{{ $item[1] }}"
                        @if($isHome) aria-current="page" @endif
-                       class="text-sm font-semibold py-2 border-b-2 {{ $isHome ? 'text-white border-[#00C8F0]' : 'text-neutral-300 border-transparent hover:text-white hover:border-[#00C8F0]/50' }} transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0] rounded">
+                       class="text-sm font-semibold py-2 border-b-2 {{ $isHome ? 'text-white border-[#00C2A8]' : 'text-[#C7CBD2] border-transparent hover:text-white hover:border-[#00C2A8]/50' }} transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C2A8] rounded">
                         {{ $item[0] }}
                     </a>
                 @endforeach
@@ -34,7 +34,7 @@
 
             <!-- CTA (Desktop) -->
             <div class="hidden sm:flex items-center">
-                <x-wa-cta variant="primary" size="sm" label="Konsultasi WhatsApp" class="bg-[#FFB020] hover:bg-[#E09A00] text-[#061827] hover:text-[#061827] font-bold" />
+                <x-wa-cta variant="primary" size="sm" label="Konsultasi WhatsApp" class="bg-[#00C2A8] hover:bg-[#00A991] text-[#111318] hover:text-[#111318] font-bold shadow-md" />
             </div>
 
             <!-- Mobile Menu Toggle -->
@@ -44,7 +44,7 @@
                         aria-controls="mobile-nav-drawer"
                         aria-expanded="false"
                         aria-label="Buka menu navigasi utama"
-                        class="p-2.5 rounded-lg text-white hover:text-[#00C8F0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0]">
+                        class="p-2.5 rounded-lg text-white hover:text-[#00C2A8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C2A8]">
                     <svg id="icon-menu-open" class="w-6 h-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
@@ -58,7 +58,7 @@
 
     <!-- Mobile Navigation Drawer -->
     <div id="mobile-nav-drawer"
-         class="hidden lg:hidden bg-[#061827] border-t border-white/10 px-4 pt-2 pb-6"
+         class="hidden lg:hidden bg-[#111318] border-t border-white/10 px-4 pt-2 pb-6"
          role="navigation"
          aria-label="Navigasi Utama Seluler">
         <div class="flex flex-col space-y-1 pt-2">
@@ -69,12 +69,12 @@
                 ['Wilayah', route('home') . '#wilayah'],
                 ['Keunggulan', route('home') . '#keunggulan'],
             ] as $item)
-                <a href="{{ $item[1] }}" class="mobile-nav-link text-base font-semibold text-neutral-200 hover:text-[#00C8F0] hover:bg-white/5 px-3 py-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C8F0]">
+                <a href="{{ $item[1] }}" class="mobile-nav-link text-base font-semibold text-[#E2E8F0] hover:text-[#00C2A8] hover:bg-white/5 px-3 py-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C2A8]">
                     {{ $item[0] }}
                 </a>
             @endforeach
             <div class="pt-3 border-t border-white/10">
-                <x-wa-cta variant="primary" size="md" class="w-full justify-center bg-[#FFB020] hover:bg-[#E09A00] text-[#061827] hover:text-[#061827] font-bold" label="Konsultasi Cepat via WhatsApp" />
+                <x-wa-cta variant="primary" size="md" class="w-full justify-center bg-[#00C2A8] hover:bg-[#00A991] text-[#111318] hover:text-[#111318] font-bold" label="Konsultasi Cepat via WhatsApp" />
             </div>
         </div>
     </div>

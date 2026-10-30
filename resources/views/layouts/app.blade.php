@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-[#F4F7FA] text-[#344054] antialiased">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-[#F4F6F8] text-[#111318] antialiased">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@hasSection('title')@yield('title') — @endif{{ config('app.name', 'dhanlielektrizitetdenky') }}</title>
-    <meta name="description" content="@yield('meta_description', 'Portal pelatihan dan layanan K3 Listrik. Informasi program pelatihan K3 Listrik dan layanan konsultasi.')">
+    <title>@hasSection('title')@yield('title') — @endif{{ config('app.name', 'Jucerdyamg') }}</title>
+    <meta name="description" content="@yield('meta_description', 'Katalog layanan dan pelatihan profesional Jucerdyamg. Informasi lengkap puluhan kategori dan ribuan layanan industri terpercaya.')">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Open Graph / Meta -->
-    <meta property="og:title" content="@hasSection('title')@yield('title') — @endif{{ config('app.name', 'dhanlielektrizitetdenky') }}">
-    <meta property="og:description" content="@yield('meta_description', 'Informasi pelatihan K3 Listrik serta layanan konsultasi keselamatan kelistrikan di Indonesia.')">
+    <meta property="og:title" content="@hasSection('title')@yield('title') — @endif{{ config('app.name', 'Jucerdyamg') }}">
+    <meta property="og:description" content="@yield('meta_description', 'Katalog layanan dan pelatihan profesional Jucerdyamg. Konsultasikan kebutuhan industri Anda bersama tim kami.')">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#061827">
+    <meta name="theme-color" content="#111318">
 
     <!-- Styles & Scripts via Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -30,9 +30,9 @@
     @stack('schema')
     @stack('styles')
 </head>
-<body class="min-h-full flex flex-col bg-[#F4F7FA] text-[#344054] antialiased selection:bg-[#FFB020] selection:text-[#061827]">
+<body class="min-h-full flex flex-col bg-[#F4F6F8] text-[#111318] antialiased selection:bg-[#00C2A8] selection:text-[#111318]">
     <!-- Accessible Skip Link -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 bg-safety-orange text-industry-black font-bold px-4 py-2 rounded-md shadow-lg outline-none ring-2 ring-industry-black">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 bg-[#00C2A8] text-[#111318] font-bold px-4 py-2 rounded-md shadow-lg outline-none ring-2 ring-[#111318]">
         Lewati ke konten utama
     </a>
 

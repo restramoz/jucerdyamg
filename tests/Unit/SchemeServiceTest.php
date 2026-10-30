@@ -30,19 +30,43 @@ class SchemeServiceTest extends TestCase
         return $method->invoke($this->service, $path);
     }
 
-    public function test_catalog_contains_exactly_123_schemes(): void
+    public function test_catalog_loads_all_services_from_layanan_json(): void
     {
-        $this->assertCount(123, $this->service->all());
+        $decoded = json_decode(file_get_contents(base_path('layanan.json')), true);
+        $expected = 0;
+        foreach ($decoded as $category) {
+            if (!isset($category['layanan']) || !is_array($category['layanan'])) {
+                continue;
+            }
+            foreach ($category['layanan'] as $name) {
+                if (!SchemeService::isExcluded((string) $name)) {
+                    $expected++;
+                }
+            }
+        }
+
+        $this->assertCount($expected, $this->service->all());
     }
 
-    public function test_catalog_contains_exactly_814_competency_units(): void
+    public function test_catalog_has_no_competency_units_from_layanan_json(): void
     {
         $total = array_sum(array_map(
             static fn (array $program): int => count($program['units']),
             $this->service->all()
         ));
 
-        $this->assertSame(814, $total);
+        // layanan.json services carry no competency units.
+        $this->assertSame(0, $total);
+    }
+
+    public function test_source_metadata_is_reachable(): void
+    {
+        $sources = $this->service->sources();
+
+        $this->assertArrayHasKey('layanan', $sources);
+        $this->assertSame('Layanan', $sources['layanan']['title']);
+        $this->assertSame('layanan.json', $sources['layanan']['file']);
+        $this->assertGreaterThan(0, $sources['layanan']['count']);
     }
 
     public function test_find_returns_scheme_by_derived_slug(): void
@@ -51,6 +75,7 @@ class SchemeServiceTest extends TestCase
 
         $this->assertNotNull($scheme);
         $this->assertSame('Teknisi Pelindian', $scheme['title']);
+        $this->assertSame('layanan', $scheme['source']);
     }
 
     public function test_find_is_case_and_spacing_tolerant(): void
@@ -81,49 +106,16 @@ class SchemeServiceTest extends TestCase
         $this->assertArrayHasKey('teknisi-pelindian-3', $programs);
     }
 
-    public function test_source_title_and_scheme_names_are_preserved_exactly(): void
+    public function test_excluded_services_are_not_in_catalog(): void
     {
-        $source = json_decode(file_get_contents(base_path('schemes_gppb.json')), true);
-
-        $this->assertSame('Geologi Pertambangan Panas Bumi (GPPB)', $source['title']);
-        $this->assertContains('Pengawas Operasional Pertama (POP) Panas Bumi', array_column($source['schemes'], 'name'));
-
         $titles = array_map(
             static fn (array $program): string => $program['title'],
             $this->service->all()
         );
 
-        // Unified catalog contains every source scheme name as a program title.
-        $this->assertContains('Pengawas Operasional Pertama (POP) Panas Bumi', $titles);
-    }
-
-    public function test_source_title_is_available_in_representation(): void
-    {
-        // The catalog title is part of the authoritative dataset, keep it reachable.
-        $programs = $this->service->all();
-        $this->assertCount(123, $programs);
-    }
-
-    public function test_unit_codes_and_names_are_preserved(): void
-    {
-        $source = json_decode(file_get_contents(base_path('schemes_gppb.json')), true);
-        $expected = null;
-        foreach ($source['schemes'] as $scheme) {
-            if ($scheme['name'] === 'Pengawas Operasional Pertama (POP) Panas Bumi') {
-                $expected = $scheme['units'];
-                break;
-            }
-        }
-        $this->assertNotNull($expected);
-
-        $loaded = $this->service->find('pengawas-operasional-pertama-pop-panas-bumi');
-
-        $this->assertSame($expected, $loaded['units']);
-
-        // Each unit (code + name) is present in curriculum_topics.
-        foreach ($expected as $unit) {
-            $this->assertContains($unit['code'] . ' — ' . $unit['name'], $loaded['curriculum_topics']);
-        }
+        $this->assertNotContains('Ahli K3 Umum', $titles);
+        $this->assertNotContains('Vaksin COVID-19', $titles);
+        $this->assertNotContains('Obat Tradisional', $titles);
     }
 
     public function test_every_program_matches_required_view_shape(): void
@@ -139,7 +131,6 @@ class SchemeServiceTest extends TestCase
             }
 
             $this->assertSame($slug, $program['slug']);
-            $this->assertNotEmpty($program['curriculum_topics']);
             $this->assertSame(
                 ['jadwal', 'durasi', 'investasi', 'persyaratan', 'otorisasi'],
                 array_keys($program['training_info'])

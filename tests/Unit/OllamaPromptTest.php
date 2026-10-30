@@ -26,7 +26,7 @@ class OllamaPromptTest extends TestCase
                 'slug' => 'judul-test',
                 'excerpt' => 'Excerpt test',
                 'content' => $content,
-                'seo_title' => 'SEO Title Test',
+                'seo_title' => 'SEO Title Test | Jucerdyamg',
                 'meta_description' => 'Meta Description Test',
                 'suggested_faqs' => [],
                 'image_brief' => [],
@@ -34,7 +34,7 @@ class OllamaPromptTest extends TestCase
         ], 200)]);
     }
 
-    public function test_prompts_carry_agricultural_identity(): void
+    public function test_prompts_carry_brand_and_global_context(): void
     {
         $this->fakeSuccessfulOllama();
 
@@ -48,13 +48,18 @@ class OllamaPromptTest extends TestCase
             $system = $request['messages'][0]['content'];
             $user = $request['messages'][1]['content'];
 
-            return str_contains($system, 'kompetensi pertambangan')
-                && str_contains($system, 'Zonyberg')
-                && str_contains($user, 'artikel pelatihan pertambangan');
+            return str_contains($system, 'Jucerdyamg')
+                && str_contains($user, 'layanan dan skema kompetensi');
+        });
+
+        // Legacy brand must not be present.
+        Http::assertSent(function (object $request): bool {
+            $prompts = $request['messages'][0]['content'] . ' ' . $request['messages'][1]['content'];
+            return !str_contains($prompts, 'Zonyberg');
         });
     }
 
-    public function test_prompts_exclude_legacy_identity(): void
+    public function test_prompts_exclude_legacy_identifiers(): void
     {
         $this->fakeSuccessfulOllama();
 
@@ -65,12 +70,11 @@ class OllamaPromptTest extends TestCase
         ]);
 
         Http::assertSent(function (object $request): bool {
-            $prompts = $request['messages'][0]['content'].' '.$request['messages'][1]['content'];
+            $prompts = $request['messages'][0]['content'] . ' ' . $request['messages'][1]['content'];
 
-            return ! str_contains($prompts, 'Ahli K3 Umum')
-                && ! str_contains($prompts, 'Alat Berat')
-                && ! str_contains($prompts, 'SMK3')
-                && ! str_contains($prompts, 'K3 Listrik');
+            return !str_contains($prompts, 'K3 Listrik')
+                && !str_contains($prompts, 'k3-listrik')
+                && !str_contains($prompts, 'Keselamatan Kelistrikan');
         });
     }
 
@@ -93,8 +97,8 @@ class OllamaPromptTest extends TestCase
             $system = $request['messages'][0]['content'];
             $user = $request['messages'][1]['content'];
 
-            return str_contains($system, 'Program spesifik: '.$title)
-                && str_contains($user, '- Program Spesifik: '.$title);
+            return str_contains($system, 'Program spesifik: ' . $title)
+                && str_contains($user, '- Program Spesifik: ' . $title);
         });
     }
 }

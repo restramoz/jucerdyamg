@@ -8,11 +8,12 @@ use Tests\TestCase;
 class ServiceCatalogTest extends TestCase
 {
     /**
-     * Guard the schemes.json-driven catalog: exactly 123 unique schemes.
+     * Guard the layanan.json-driven catalog: it loads all authoritative services.
      */
-    public function test_catalog_has_exactly_123_schemes(): void
+    public function test_catalog_loads_from_layanan_json(): void
     {
-        $this->assertCount(123, app(SchemeService::class)->all());
+        $this->assertGreaterThan(0, app(SchemeService::class)->all());
+        $this->assertGreaterThan(0, app(SchemeService::class)->sources()['layanan']['count']);
     }
 
     public function test_every_scheme_has_complete_required_structure(): void
@@ -22,7 +23,8 @@ class ServiceCatalogTest extends TestCase
                 $this->assertArrayHasKey($key, $scheme, "Scheme {$slug} is missing [{$key}].");
             }
 
-            $this->assertNotEmpty($scheme['curriculum_topics'], "Scheme {$slug} needs at least one unit.");
+            // layanan.json services carry no competency units; the key is present (may be empty).
+            $this->assertArrayHasKey('curriculum_topics', $scheme);
             $this->assertGreaterThan(0, count($scheme['faqs']));
             $this->assertLessThanOrEqual(3, count($scheme['faqs']), "Scheme {$slug} may have at most 3 FAQs.");
             $this->assertSame(

@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Route;
 
 // Homepage
 Route::get('/', function () {
-    return view('home');
+    $latestArticles = \Illuminate\Support\Facades\Schema::hasTable('articles')
+        ? \App\Models\Article::published()->orderBy('published_at', 'desc')->take(3)->get()
+        : collect();
+
+    return view('home', compact('latestArticles'));
 })->name('home');
 
 // XML Sitemap for Search Engines

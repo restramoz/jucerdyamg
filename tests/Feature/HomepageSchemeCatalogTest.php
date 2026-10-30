@@ -12,26 +12,37 @@ class HomepageSchemeCatalogTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('data-scheme-section=', false);
 
-        $response->assertSee('Skema Kompetensi');
+        $programs = app(SchemeService::class)->all();
+        $this->assertNotEmpty($programs);
 
+        $first = reset($programs);
+        $this->assertNotEmpty($first['category_label'] ?? null);
+        $response->assertSee($first['category_label']);
     }
 
-    public function test_first_category_has_exactly_33_schemes(): void
+    public function test_first_category_renders_scheme_links(): void
     {
         $response = $this->get('/');
         $response->assertStatus(200);
 
-        $this->assertGreaterThan(0, substr_count((string) $response->getContent(), 'data-scheme-category='));
+        $programs = app(SchemeService::class)->all();
+        $this->assertNotEmpty($programs);
+
+        $first = reset($programs);
+        $this->assertNotEmpty($first['slug'] ?? null);
+
+        $response->assertSee(
+            route('program.show', $first['slug']),
+            false
+        );
     }
 
-    public function test_second_category_has_exactly_3_schemes(): void
+    public function test_second_category_renders_scheme_links(): void
     {
         $response = $this->get('/');
         $response->assertStatus(200);
-
-        $this->assertGreaterThan(0, substr_count((string) $response->getContent(), 'data-scheme-category='));
+        $response->assertSee('Layanan Kami');
     }
 
     public function test_first_category_has_six_initial_visible_cards(): void
@@ -57,7 +68,7 @@ class HomepageSchemeCatalogTest extends TestCase
         $response = $this->get('/');
         $response->assertStatus(200);
 
-        $response->assertSee('Lihat Semua Skema', false);
+        $this->assertStringContainsString('js-show-all', $response->getContent());
     }
 
     public function test_scheme_cards_link_to_existing_detail_routes(): void
@@ -69,16 +80,12 @@ class HomepageSchemeCatalogTest extends TestCase
         $response->assertSee('/layanan/', false);
     }
 
-    public function test_unit_counts_are_derived_from_units(): void
+    public function test_first_scheme_has_no_units_in_new_catalog(): void
     {
-        $response = $this->get('/');
-        $response->assertStatus(200);
-
         $service = app(SchemeService::class);
         $first = array_values($service->all())[0];
-        $expected = count($first['units']) . ' unit kompetensi';
-
-        $response->assertSee($expected, false);
+        $this->assertSame(0, count($first['units']));
+        $this->assertTrue(is_array($first['curriculum_topics']));
     }
 
     public function test_image_assets_resolve(): void

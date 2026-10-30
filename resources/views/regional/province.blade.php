@@ -1,8 +1,8 @@
 
 @extends('layouts.app')
 
-@section('title', 'Skema Kompetensi K3 Listrik Provinsi ' . $province['name'] . ' — Konsultasi Resmi')
-@section('meta_description', 'Informasi skema kompetensi dan program pelatihan K3 Listrik untuk wilayah Provinsi ' . $province['name'] . '.')
+@section('title', 'Skema Kompetensi Jucerdyamg Provinsi ' . $province['name'] . ' — Konsultasi Resmi')
+@section('meta_description', 'Informasi skema kompetensi dan program pelatihan Jucerdyamg untuk wilayah Provinsi ' . $province['name'] . '.')
 @section('wa_message', $waMessage)
 
 @section('content')
@@ -36,7 +36,7 @@
                 <div class="lg:hidden mb-5 -mx-4 sm:-mx-6">
                     <img
                         src="/images/home/feature-lineworker-ppe.jpg"
-                        alt="Aktivitas K3 Listrik di Provinsi {{ $province['name'] }}"
+                        alt="Aktivitas Jucerdyamg di Provinsi {{ $province['name'] }}"
                         width="1600"
                         height="900"
                         loading="eager"
@@ -55,13 +55,13 @@
                     class="font-extrabold tracking-tight text-white leading-tight uppercase text-[clamp(1.75rem,4.5vw,2.5rem)] sm:text-[clamp(2rem,5vw,3rem)] lg:text-[clamp(2.25rem,4.5vw,3.5rem)]">
                     Skema Kompetensi<br>
                     <span class="text-safety-orange">
-                        K3 Listrik Provinsi {{ $province['name'] }}
+                        Jucerdyamg Provinsi {{ $province['name'] }}
                     </span>
                 </h1>
 
                 <p class="mt-6 text-base sm:text-lg text-neutral-200 leading-relaxed">
-                    Pusat informasi skema kompetensi dan program pelatihan K3 Listrik untuk badan usaha,
-                    fasilitas produksi, dan mitra K3 Listrik di
+                    Pusat informasi skema kompetensi dan program pelatihan Jucerdyamg untuk badan usaha,
+                    fasilitas produksi, dan mitra Jucerdyamg di
                     <strong class="text-white">Provinsi {{ $province['name'] }}</strong>.
                 </p>
 
@@ -100,7 +100,7 @@
                     <div class="min-w-0">
                         <div class="text-[10px] sm:text-xs text-neutral-400 uppercase tracking-wider">Lingkup</div>
                         <div class="text-sm sm:text-base font-extrabold text-safety-orange mt-0.5">
-                            K3 Listrik
+                            Jucerdyamg
                         </div>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                 </h2>
 
                 <p class="mt-3 text-sm sm:text-base text-dark-mahogany leading-relaxed">
-                    Pilih program pelatihan K3 Listrik sesuai kebutuhan organisasi Anda.
+                    Pilih program pelatihan Jucerdyamg sesuai kebutuhan organisasi Anda.
                     Gunakan tombol di bawah untuk melihat seluruh layanan yang tersedia.
                 </p>
             </div>
@@ -183,7 +183,7 @@
                                 </h3>
 
                                 <p class="text-xs sm:text-sm text-dark-mahogany flex-1 leading-relaxed line-clamp-3">
-                                    {{ $prog['hero_subheading'] ?? 'Informasi program pelatihan dan konsultasi K3 Listrik.' }}
+                                    {{ $prog['hero_subheading'] ?? 'Informasi program pelatihan dan konsultasi Jucerdyamg.' }}
                                 </p>
 
                                 <div class="mt-4 pt-4 border-t border-neutral-100 text-xs font-bold text-burnt-brick flex items-center justify-between">
@@ -281,7 +281,7 @@
                 @foreach ([
                     [
                         'q' => 'Apakah skema kompetensi dan layanan konsultasi tersedia untuk wilayah Provinsi ' . $province['name'] . '?',
-                        'a' => 'Ya, halaman ini menyajikan skema kompetensi K3 Listrik yang tersedia. Layanan konsultasi dapat dikonfirmasi untuk kota dan kabupaten di Provinsi ' . $province['name'] . '.',
+                        'a' => 'Ya, halaman ini menyajikan skema kompetensi Jucerdyamg yang tersedia. Layanan konsultasi dapat dikonfirmasi untuk kota dan kabupaten di Provinsi ' . $province['name'] . '.',
                     ],
                     [
                         'q' => 'Skema kompetensi apa saja yang tersedia?',
@@ -326,7 +326,7 @@
 
                 <h2 id="prov-cta-heading"
                     class="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight">
-                    Konsultasi Program K3 Listrik<br>
+                    Konsultasi Program Jucerdyamg<br>
                     <span class="text-safety-orange">
                         Provinsi {{ $province['name'] }}
                     </span>
